@@ -1,0 +1,6 @@
+﻿@using ExpenseTracker.Web.App.Blazor.Expenses.Components
+@page "/edit/{id:int}"
+
+<PageTitle>Edit Expense</PageTitle>
+
+<ExpenseDetailBase OnInitAsync="InitAsync" OnSaveAsync="SaveAsync" />

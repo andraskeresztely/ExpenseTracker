@@ -1,0 +1,44 @@
+﻿@if(_editContext != null)
+{
+     <EditForm EditContext="_editContext" OnValidSubmit="Save">
+         <DataAnnotationsValidator />
+
+        <MudContainer Fixed="true">
+            <MudGrid>
+                <MudItem sm="7">
+                    <MudCard>
+                        <MudCardContent>
+                            <MudDatePicker Label="Transaction date" @bind-Date="_expense!.TransactionDate" For="@(() => _expense!.TransactionDate)" MaxDate="Model.ExpenseViewModel.MaxTransactionDate"/>
+                            <MudTextField Label="Recipient" @bind-Value="_expense!.Recipient" For="@(() => _expense!.Recipient)" />
+                            <MudSelect Label="Expense type" @bind-Value="_expense!.Type" For="@(() => _expense!.Type)">
+                                @foreach (var type in Model.ExpenseViewModel.Types)
+                                {
+                                    <MudSelectItem Value="@type" />
+                                }
+                            </MudSelect>
+                            <MudNumericField Label="Spending amount" @bind-Value="_expense!.SpendingAmount" For="@(() => _expense!.SpendingAmount)" Variant="Variant.Text" Min="1"/>
+                            <MudSelect Label="Spending currency" @bind-Value="_expense!.SpendingCurrency" For="@(() => _expense!.SpendingCurrency)">
+                                @foreach (var currency in Model.ExpenseViewModel.Currencies)
+                                {
+                                    <MudSelectItem Value="@currency" />
+                                }
+                            </MudSelect>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" disabled=@(_isError || !_isTouched)>Save</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+
+                 <MudItem sm="5">
+                    <MudPaper Class="pa-4 mud-height-full">
+                        <MudText Typo="Typo.subtitle2">Validation Summary</MudText>
+                            <MudText Color="@Color.Error">
+                                <ValidationSummary />
+                            </MudText>
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudContainer>
+    </EditForm>
+}
