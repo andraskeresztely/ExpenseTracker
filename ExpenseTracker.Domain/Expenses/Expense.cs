@@ -11,6 +11,8 @@ namespace ExpenseTracker.Domain.Expenses
         public required DateTime TransactionDate { get; init; }
         public required ExpenseType Type { get; init; }
 
+        private Expense() {}
+
         public static Result<Expense> Create(
             int id,
             string recipient,

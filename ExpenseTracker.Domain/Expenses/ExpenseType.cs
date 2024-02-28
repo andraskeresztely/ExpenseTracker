@@ -7,6 +7,8 @@ namespace ExpenseTracker.Domain.Expenses
     {
         public required string Value { get; init; }
 
+        private ExpenseType() {}
+
         public static Result<ExpenseType> Create(string expenseType)
         {
             var (isValid, errors) = IsValid(expenseType);

@@ -8,6 +8,8 @@ namespace ExpenseTracker.Domain.Expenses
         public required decimal Amount { get; init; }
         public required string Currency { get; init; }
 
+        private Money() {}
+
         public static Result<Money> Create(decimal amount, string currency)
         {
             var (isValid, errors) = IsValid(amount, currency);
