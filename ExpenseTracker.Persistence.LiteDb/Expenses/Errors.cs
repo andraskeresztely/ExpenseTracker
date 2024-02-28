@@ -2,7 +2,7 @@
 
 namespace ExpenseTracker.Persistence.LiteDb.Expenses
 {
-    public static class Errors
+    internal static class Errors
     {
         public static class General
         {

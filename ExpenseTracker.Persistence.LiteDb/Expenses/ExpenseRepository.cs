@@ -6,7 +6,7 @@ using LiteDB;
 
 namespace ExpenseTracker.Persistence.LiteDb.Expenses
 {
-    public sealed class ExpenseRepository(
+    internal sealed class ExpenseRepository(
         ILiteDatabase dbContext,
         IMapper mapper) : IExpenseRepository
     {
@@ -30,15 +30,9 @@ namespace ExpenseTracker.Persistence.LiteDb.Expenses
                 return await Task.FromResult(new ErrorList([ Errors.General.NotFound() ]));
             }
 
-            var expense = Expense.Create(
-                expenseModel.Id,
-                expenseModel.Recipient,
-                expenseModel.SpendingAmount,
-                expenseModel.SpendingCurrency,
-                expenseModel.TransactionDate,
-                expenseModel.Type);
+            var result = mapper.Map<Result<Expense>>(expenseModel);
 
-            return await Task.FromResult(expense);
+            return await Task.FromResult(result);
         }
 
         public async IAsyncEnumerable<Result<Expense>> GetAllAsync()
@@ -47,15 +41,9 @@ namespace ExpenseTracker.Persistence.LiteDb.Expenses
 
             foreach (var expenseModel in expenses.Query().ToEnumerable())
             {
-                var expense = Expense.Create(
-                    expenseModel.Id,
-                    expenseModel.Recipient,
-                    expenseModel.SpendingAmount,
-                    expenseModel.SpendingCurrency,
-                    expenseModel.TransactionDate,
-                    expenseModel.Type);
+                var result = mapper.Map<Result<Expense>>(expenseModel);
 
-                yield return await Task.FromResult(expense);
+                yield return await Task.FromResult(result);
             }
         }
 

@@ -5,7 +5,7 @@ namespace ExpenseTracker.Domain.Expenses
 {
     public sealed class Expense
     {
-        public int Id { get; init; }
+        public required int Id { get; init; }
         public required string Recipient { get; init; }
         public required Money Spending { get; init; }
         public required DateTime TransactionDate { get; init; }

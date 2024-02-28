@@ -5,7 +5,7 @@ using FluentAssertions;
 
 namespace ExpenseTracker.Domain.Tests.Expenses
 {
-    public class ValidationTests
+    public sealed class ValidationTests
     {
         private const int ID = 0;
 
@@ -178,7 +178,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
         }
 
         [Test]
-        public void GivenTooLowTransactionDateParameter_WhenExpenseIsCreated_FailureResultReturned()
+        public void GivenTooEarlyTransactionDateParameter_WhenExpenseIsCreated_FailureResultReturned()
         {
             // Act 
             var result = Expense.Create(ID, _minCorrectRecipient, _minCorrectSpendingAmount, _correctSpendingCurrencies[0], _minCorrectTransactionDate.AddDays(-1), _correctTypes[0]);
@@ -190,7 +190,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
         }
 
         [Test]
-        public void GivenTooHighTransactionDateParameter_WhenExpenseIsCreated_FailureResultReturned()
+        public void GivenTooLateTransactionDateParameter_WhenExpenseIsCreated_FailureResultReturned()
         {
             // Act 
             var result = Expense.Create(ID, _maxCorrectRecipient, _maxCorrectSpendingAmount, _correctSpendingCurrencies[2], _maxCorrectTransactionDate.AddDays(1), _correctTypes[2]);

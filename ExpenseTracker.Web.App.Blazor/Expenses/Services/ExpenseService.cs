@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 
 namespace ExpenseTracker.Web.App.Blazor.Expenses.Services
 {
-    public sealed class ExpenseService(HttpClient httpClient)
+    internal sealed class ExpenseService(HttpClient httpClient)
     {
         private HttpClient HttpClient { get; } = httpClient;
 

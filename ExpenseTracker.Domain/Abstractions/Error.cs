@@ -4,5 +4,5 @@ namespace ExpenseTracker.Domain.Abstractions
 {
     public sealed record Error(string Code, string? Message = null);
 
-    public class ErrorList(IList<Error> list) : ReadOnlyCollection<Error>(list);
+    public sealed class ErrorList(IList<Error> list) : ReadOnlyCollection<Error>(list);
 }

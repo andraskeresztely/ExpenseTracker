@@ -16,8 +16,8 @@
         <MudTd DataLabel="Type">@context.Type</MudTd>
         <MudTd DataLabel="Type">@context.SpendingCurrency @context.SpendingAmount</MudTd>
         <MudTd>
-            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@(_ => EditExpense(context.Id))">Edit</MudButton>
-            <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(_ => OpenConfirmDialog(context.Id))">Delete</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(_ => EditExpense(context.Id))">Edit</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(_ => OpenConfirmDialog(context.Id))">Delete</MudButton>
         </MudTd>
     </RowTemplate>
 </MudTable>

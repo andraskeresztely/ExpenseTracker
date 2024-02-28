@@ -1,6 +1,6 @@
 ﻿namespace ExpenseTracker.Domain.Abstractions
 {
-    public class Result<TValue>
+    public sealed class Result<TValue>
     {
         public TValue Value => IsSuccess ? _value! : throw new Exception("Value is inaccessible for failure.");
         public ErrorList Errors => IsFailure ? _errors : throw new Exception("Error is inaccessible for success.");

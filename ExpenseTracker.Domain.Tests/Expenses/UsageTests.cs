@@ -4,7 +4,7 @@ using FluentAssertions;
 
 namespace ExpenseTracker.Domain.Tests.Expenses
 {
-    public class UsageTests
+    public sealed class UsageTests
     {
         private const int ID = 0;
         private string _correctRecipient = string.Empty;
@@ -20,13 +20,9 @@ namespace ExpenseTracker.Domain.Tests.Expenses
         {
             //Arrange
             _correctRecipient = string.Join(string.Empty, _fixture.CreateMany<char>(2));
-
             _correctSpendingAmount = 1;
-
             _correctSpendingCurrency = "CHF";
-
             _correctTransactionDate = DateTime.Today;
-
             _correctType = "Food";
         }
 

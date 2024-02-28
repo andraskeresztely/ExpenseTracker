@@ -52,7 +52,7 @@ namespace ExpenseTracker.Web.App.Blazor.Expenses.Pages
             {
                 { dialog => dialog.ContentText, "Do you really want to delete this expense?" },
                 { dialog => dialog.ButtonText, "Delete" },
-                { dialog => dialog.Color, Color.Error }
+                { dialog => dialog.Color, Color.Secondary }
             };
 
             var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true };

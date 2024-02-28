@@ -21,13 +21,7 @@ namespace ExpenseTracker.Web.Api.Expenses.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<int>> CreateAsync(ExpenseViewModel expense)
         {
-            var result = Expense.Create(
-               expense.Id,
-               expense.Recipient,
-               expense.SpendingAmount!.Value,
-               expense.SpendingCurrency,
-               expense.TransactionDate!.Value,
-               expense.Type);
+            var result = mapper.Map<Result<Expense>>(expense);
 
             CheckForFailureAndThrow(result, null);
 
@@ -87,13 +81,7 @@ namespace ExpenseTracker.Web.Api.Expenses.Controllers
                 return BadRequest("The parameter 'id' and the entity's id must be equal.");
             }
 
-            var result = Expense.Create(
-               expense.Id,
-               expense.Recipient,
-               expense.SpendingAmount!.Value,
-               expense.SpendingCurrency,
-               expense.TransactionDate!.Value,
-               expense.Type);
+            var result = mapper.Map<Result<Expense>>(expense);
 
             CheckForFailureAndThrow(result, id);
 
