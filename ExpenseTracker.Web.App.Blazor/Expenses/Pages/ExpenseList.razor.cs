@@ -50,12 +50,12 @@ namespace ExpenseTracker.Web.App.Blazor.Expenses.Pages
         {
             var parameters = new DialogParameters<ConfirmDialog>
             {
-                { dialog => dialog.ContentText, "Do you really want to delete this expense?" },
+                { dialog => dialog.ContentText, "Do you really want to delete this expense? This process cannot be undone." },
                 { dialog => dialog.ButtonText, "Delete" },
                 { dialog => dialog.Color, Color.Secondary }
             };
 
-            var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true };
+            var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true, MaxWidth = MaxWidth.ExtraSmall};
 
             var dialog = await DialogService.ShowAsync<ConfirmDialog>("Are you sure?", parameters, options);
             var result = await dialog.Result;
