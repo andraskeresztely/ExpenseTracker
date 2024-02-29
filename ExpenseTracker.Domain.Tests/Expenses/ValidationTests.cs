@@ -7,60 +7,38 @@ namespace ExpenseTracker.Domain.Tests.Expenses
 {
     public sealed class ValidationTests
     {
-        private const int ID = 0;
+        private static readonly Fixture Fixture = new();
 
-        private string _incorrectType = string.Empty;
+        private static readonly ExpenseId CorrectId = ExpenseId.Create(0).Value;
 
-        private string _minCorrectRecipient = string.Empty;
-        private string _maxCorrectRecipient = string.Empty;
+        private static readonly Recipient MinCorrectRecipient = Recipient.Create(string.Join(string.Empty, Fixture.CreateMany<char>(2))).Value;
+        private static readonly Recipient MaxCorrectRecipient = Recipient.Create(string.Join(string.Empty, Fixture.CreateMany<char>(255))).Value;
 
-        private decimal _minCorrectSpendingAmount;
-        private decimal _maxCorrectSpendingAmount;
+        private static readonly Money MinCorrectSpending = Money.Create(1, "CHF").Value;
+        private static readonly Money MaxCorrectSpending = Money.Create(1_000_000, "USD").Value;
 
-        private string _incorrectSpendingCurrency = string.Empty;
+        private static readonly TransactionDate MinCorrectTransactionDate = TransactionDate.Create(DateTime.MinValue.AddDays(1)).Value;
+        private static readonly TransactionDate MaxCorrectTransactionDate = TransactionDate.Create(DateTime.Today).Value;
 
-        private DateTime _minCorrectTransactionDate;
-        private DateTime _maxCorrectTransactionDate;
-
-        private readonly string[] _correctSpendingCurrencies = ["CHF", "EUR", "USD"];
-
-        private readonly string[] _correctTypes = ["Drinks", "Food", "Other"];
-
-        private readonly Fixture _fixture = new();
-
-        [OneTimeSetUp]
-        public void OneTimeSetup()
-        {
-            //Arrange
-            _incorrectType = _fixture.Create<string>();
-
-            _minCorrectRecipient = string.Join(string.Empty, _fixture.CreateMany<char>(2));
-            _maxCorrectRecipient = string.Join(string.Empty, _fixture.CreateMany<char>(255));
-
-            _minCorrectSpendingAmount = 1;
-            _maxCorrectSpendingAmount = 1_000_000;
-
-            _incorrectSpendingCurrency = _fixture.Create<string>();
-
-            _minCorrectTransactionDate = DateTime.MinValue.AddDays(1);
-            _maxCorrectTransactionDate = DateTime.Today;
-        }
+        private static readonly ExpenseType CorrectType = ExpenseType.Create("Drinks").Value;
 
         [Test]
-        public void GivenCorrectMinimumParameters_WhenExpenseIsCreated_SuccessResultReturned()
+        public void GivenIncorrectIdParameter_WhenExpenseIdIsCreated_FailureResultReturned()
         {
             // Act 
-            var result = Expense.Create(ID, _minCorrectRecipient, _minCorrectSpendingAmount, _correctSpendingCurrencies[0], _minCorrectTransactionDate, _correctTypes[0]);
+            var result = ExpenseId.Create(Fixture.Create<int>() * -1);
 
             // Assert
-            result.IsSuccess.Should().BeTrue();
+            result.IsFailure.Should().BeTrue();
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.ExpenseId.ValueIsInvalid());
         }
 
         [Test]
-        public void GivenCorrectMaximumParameters_WhenExpenseIsCreated_SuccessResultReturned()
+        public void GivenCorrectIdParameter_WhenExpenseIdIsCreated_SuccessResultReturned()
         {
             // Act 
-            var result = Expense.Create(ID, _maxCorrectRecipient, _maxCorrectSpendingAmount, _correctSpendingCurrencies[2], _maxCorrectTransactionDate, _correctTypes[2]);
+            var result = ExpenseId.Create(CorrectId.Value);
 
             // Assert
             result.IsSuccess.Should().BeTrue();
@@ -68,137 +46,191 @@ namespace ExpenseTracker.Domain.Tests.Expenses
 
         [TestCase("")]
         [TestCase(null)]
-        public void GivenEmptyTypeParameter_WhenExpenseIsCreated_FailureResultReturned(string? type)
+        public void GivenEmptyRecipientParameter_WhenRecipientIsCreated_FailureResultReturned(string? recipient)
         {
             // Act 
-            var result = Expense.Create(ID, _maxCorrectRecipient, _maxCorrectSpendingAmount, _correctSpendingCurrencies[2], _maxCorrectTransactionDate, type!);
+            var result = Recipient.Create(recipient!);
 
             // Assert
             result.IsFailure.Should().BeTrue();
-            result.Errors.Count.Should().Be(1);
-            result.Errors.First().Should().Be(Errors.ExpenseType.ValueIsRequired());
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.Recipient.NameIsRequired());
         }
 
         [Test]
-        public void GivenIncorrectTypeParameter_WhenExpenseIsCreated_FailureResultReturned()
+        public void GivenTooShortRecipientParameter_WhenRecipientIsCreated_FailureResultReturned()
         {
             // Act 
-            var result = Expense.Create(ID, _maxCorrectRecipient, _maxCorrectSpendingAmount, _correctSpendingCurrencies[2], _maxCorrectTransactionDate, _incorrectType);
+            var result = Recipient.Create(MinCorrectRecipient.Name[..^1]);
 
             // Assert
             result.IsFailure.Should().BeTrue();
-            result.Errors.Count.Should().Be(1);
-            result.Errors.First().Should().Be(Errors.ExpenseType.ValueIsInvalid());
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.Recipient.LengthIsInvalid());
+        }
+
+        [Test]
+        public void GivenTooLongRecipientParameter_WhenRecipientIsCreated_FailureResultReturned()
+        {
+            // Act 
+            var result = Recipient.Create(MaxCorrectRecipient.Name + "A");
+
+            // Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.Recipient.LengthIsInvalid());
+        }
+
+        [Test]
+        public void GivenCorrectRecipientParameter_WhenRecipientIsCreated_SuccessResultReturned()
+        {
+            // Act 
+            var result = Recipient.Create(MaxCorrectRecipient.Name);
+
+            // Assert
+            result.IsSuccess.Should().BeTrue();
+        }
+
+        [Test]
+        public void GivenTooLowAmountParameter_WhenMoneyIsCreated_FailureResultReturned()
+        {
+            // Act 
+            var result = Money.Create(MinCorrectSpending.Amount - 1, MinCorrectSpending.Currency);
+
+            // Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.Spending.AmountIsInvalid());
+        }
+
+        [Test]
+        public void GivenTooHighAmountParameter_WhenMoneyIsCreated_FailureResultReturned()
+        {
+            // Act 
+            var result = Money.Create(MaxCorrectSpending.Amount + 1, MaxCorrectSpending.Currency);
+
+            // Assert
+            result.IsFailure.Should().BeTrue();
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.Spending.AmountIsInvalid());
         }
 
         [TestCase("")]
         [TestCase(null)]
-        public void GivenEmptyRecipientParameter_WhenExpenseIsCreated_FailureResultReturned(string? recipient)
+        public void GivenEmptyCurrencyParameter_WhenMoneyIsCreated_FailureResultReturned(string? spendingCurrency)
         {
             // Act 
-            var result = Expense.Create(ID, recipient!, _maxCorrectSpendingAmount, _correctSpendingCurrencies[2], _maxCorrectTransactionDate, _correctTypes[2]);
+            var result = Money.Create(MaxCorrectSpending.Amount, spendingCurrency!);
 
             // Assert
             result.IsFailure.Should().BeTrue();
-            result.Errors.Count.Should().Be(1);
-            result.Errors.First().Should().Be(Errors.Recipient.ValueIsRequired());
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.Spending.CurrencyIsRequired());
         }
 
         [Test]
-        public void GivenTooShortRecipientParameter_WhenExpenseIsCreated_FailureResultReturned()
+        public void GivenIncorrectCurrencyParameter_WhenMoneyIsCreated_FailureResultReturned()
         {
             // Act 
-            var result = Expense.Create(ID, _minCorrectRecipient[..^1], _minCorrectSpendingAmount, _correctSpendingCurrencies[0], _minCorrectTransactionDate, _correctTypes[0]);
+            var result = Money.Create(MaxCorrectSpending.Amount, Fixture.Create<string>());
 
             // Assert
             result.IsFailure.Should().BeTrue();
-            result.Errors.Count.Should().Be(1);
-            result.Errors.First().Should().Be(Errors.Recipient.LengthIsInvalid());
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.Spending.CurrencyIsInvalid());
+        }
+
+        [TestCase("CHF")]
+        [TestCase("EUR")]
+        [TestCase("USD")]
+        public void GivenCorrectAmountAndCurrencyParameters_WhenMoneyIsCreated_SuccessResultReturned(string currency)
+        {
+            // Act 
+            var result = Money.Create(MaxCorrectSpending.Amount, currency);
+
+            // Assert
+            result.IsSuccess.Should().BeTrue();
         }
 
         [Test]
-        public void GivenTooLongRecipientParameter_WhenExpenseIsCreated_FailureResultReturned()
+        public void GivenTooEarlyTransactionDateParameter_WhenTransactionDateIsCreated_FailureResultReturned()
         {
             // Act 
-            var result = Expense.Create(ID, _maxCorrectRecipient + "A", _maxCorrectSpendingAmount, _correctSpendingCurrencies[2], _maxCorrectTransactionDate, _correctTypes[2]);
+            var result = TransactionDate.Create(MinCorrectTransactionDate.Value.AddDays(-1));
 
             // Assert
             result.IsFailure.Should().BeTrue();
-            result.Errors.Count.Should().Be(1);
-            result.Errors.First().Should().Be(Errors.Recipient.LengthIsInvalid());
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.TransactionDate.ValueIsRequired());
         }
 
         [Test]
-        public void GivenTooLowSpendingAmountParameter_WhenExpenseIsCreated_FailureResultReturned()
+        public void GivenTooLateTransactionDateParameter_WhenTransactionDateIsCreated_FailureResultReturned()
         {
             // Act 
-            var result = Expense.Create(ID, _minCorrectRecipient, _minCorrectSpendingAmount - 1, _correctSpendingCurrencies[0], _minCorrectTransactionDate, _correctTypes[0]);
+            var result = TransactionDate.Create(MaxCorrectTransactionDate.Value.AddDays(1));
 
             // Assert
             result.IsFailure.Should().BeTrue();
-            result.Errors.Count.Should().Be(1);
-            result.Errors.First().Should().Be(Errors.Spending.AmountIsInvalid());
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.TransactionDate.ValueIsInvalid());
         }
 
         [Test]
-        public void GivenTooHighSpendingAmountParameter_WhenExpenseIsCreated_FailureResultReturned()
+        public void GivenCorrectTransactionDateParameter_WhenTransactionDateIsCreated_SuccessResultReturned()
         {
             // Act 
-            var result = Expense.Create(ID, _maxCorrectRecipient, _maxCorrectSpendingAmount + 1, _correctSpendingCurrencies[2], _maxCorrectTransactionDate, _correctTypes[2]);
+            var result = TransactionDate.Create(MaxCorrectTransactionDate.Value);
 
             // Assert
-            result.IsFailure.Should().BeTrue();
-            result.Errors.Count.Should().Be(1);
-            result.Errors.First().Should().Be(Errors.Spending.AmountIsInvalid());
+            result.IsSuccess.Should().BeTrue();
         }
 
         [TestCase("")]
         [TestCase(null)]
-        public void GivenEmptySpendingCurrencyParameter_WhenExpenseIsCreated_FailureResultReturned(string? spendingCurrency)
+        public void GivenEmptyTypeParameter_WhenExpenseTypeIsCreated_FailureResultReturned(string? type)
         {
             // Act 
-            var result = Expense.Create(ID, _maxCorrectRecipient, _maxCorrectSpendingAmount, spendingCurrency!, _maxCorrectTransactionDate, _correctTypes[2]);
+            var result = ExpenseType.Create(type!);
 
             // Assert
             result.IsFailure.Should().BeTrue();
-            result.Errors.Count.Should().Be(1);
-            result.Errors.First().Should().Be(Errors.Spending.CurrencyIsRequired());
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.ExpenseType.ValueIsRequired());
         }
 
         [Test]
-        public void GivenIncorrectSpendingCurrencyParameter_WhenExpenseIsCreated_FailureResultReturned()
+        public void GivenIncorrectTypeParameter_WhenExpenseTypeIsCreated_FailureResultReturned()
         {
             // Act 
-            var result = Expense.Create(ID, _maxCorrectRecipient, _maxCorrectSpendingAmount, _incorrectSpendingCurrency, _maxCorrectTransactionDate, _correctTypes[2]);
+            var result = ExpenseType.Create(Fixture.Create<string>());
 
             // Assert
             result.IsFailure.Should().BeTrue();
-            result.Errors.Count.Should().Be(1);
-            result.Errors.First().Should().Be(Errors.Spending.CurrencyIsInvalid());
+            result.Error.Count.Should().Be(1);
+            result.Error.First().Should().Be(ErrorCodes.ExpenseType.ValueIsInvalid());
+        }
+
+        [TestCase("Drinks")]
+        [TestCase("Food")]
+        [TestCase("Other")]
+        public void GivenCorrectTypeParameter_WhenExpenseTypeIsCreated_SuccessResultReturned(string type)
+        {
+            // Act 
+            var result = ExpenseType.Create(type);
+
+            // Assert
+            result.IsSuccess.Should().BeTrue();
         }
 
         [Test]
-        public void GivenTooEarlyTransactionDateParameter_WhenExpenseIsCreated_FailureResultReturned()
+        public void GivenCorrectParameters_WhenExpenseIsCreated_SuccessResultReturned()
         {
             // Act 
-            var result = Expense.Create(ID, _minCorrectRecipient, _minCorrectSpendingAmount, _correctSpendingCurrencies[0], _minCorrectTransactionDate.AddDays(-1), _correctTypes[0]);
+            var result = Expense.Create(CorrectId, MinCorrectRecipient, MinCorrectSpending, MinCorrectTransactionDate, CorrectType);
 
             // Assert
-            result.IsFailure.Should().BeTrue();
-            result.Errors.Count.Should().Be(1);
-            result.Errors.First().Should().Be(Errors.TransactionDate.ValueIsRequired());
-        }
-
-        [Test]
-        public void GivenTooLateTransactionDateParameter_WhenExpenseIsCreated_FailureResultReturned()
-        {
-            // Act 
-            var result = Expense.Create(ID, _maxCorrectRecipient, _maxCorrectSpendingAmount, _correctSpendingCurrencies[2], _maxCorrectTransactionDate.AddDays(1), _correctTypes[2]);
-
-            // Assert
-            result.IsFailure.Should().BeTrue();
-            result.Errors.Count.Should().Be(1);
-            result.Errors.First().Should().Be(Errors.TransactionDate.ValueIsInvalid());
+            result.IsSuccess.Should().BeTrue();
         }
     }
 }

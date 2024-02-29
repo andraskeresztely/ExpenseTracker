@@ -2,8 +2,13 @@
 
 namespace ExpenseTracker.Domain.Expenses.Validation
 {
-    public static class Errors
+    public static class ErrorCodes
     {
+        public static class ExpenseId
+        {
+            public static Error ValueIsInvalid() => new("expense.id.value.invalid", "Value is invalid.");
+        }
+
         public static class ExpenseType
         {
             public static Error ValueIsInvalid() => new("expense.type.value.invalid", "Value is invalid.");
@@ -15,7 +20,7 @@ namespace ExpenseTracker.Domain.Expenses.Validation
         {
             public static Error LengthIsInvalid() => new("recipient.length.invalid", "Length is invalid.");
 
-            public static Error ValueIsRequired() => new("recipient.value.required", "Value is required.");
+            public static Error NameIsRequired() => new("recipient.name.required", "Name is required.");
         }
 
         public static class Spending

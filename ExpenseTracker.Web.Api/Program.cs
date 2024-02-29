@@ -1,6 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
 using ExpenseTracker.Persistence.LiteDb;
 using Serilog;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ExpenseTracker.Web.Api
 {

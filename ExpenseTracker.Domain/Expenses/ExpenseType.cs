@@ -1,23 +1,30 @@
-﻿using ExpenseTracker.Domain.Abstractions;
+﻿using CSharpFunctionalExtensions;
+using ExpenseTracker.Domain.Abstractions;
 using ExpenseTracker.Domain.Expenses.Validation;
 
 namespace ExpenseTracker.Domain.Expenses
 {
-    public sealed record ExpenseType
+    public sealed class ExpenseType : ValueObject
     {
         public required string Value { get; init; }
 
         private ExpenseType() {}
 
-        public static Result<ExpenseType> Create(string expenseType)
+        public static Result<ExpenseType, Errors> Create(string expenseType)
         {
             var (isValid, errors) = IsValid(expenseType);
+
             if (!isValid)
             {
-                return new ErrorList(errors);
+                return new Errors(errors);
             }
 
             return new ExpenseType { Value = expenseType };
+        }
+
+        protected override IEnumerable<IComparable> GetEqualityComponents()
+        {
+            yield return Value;
         }
 
         public override string ToString()
@@ -31,13 +38,13 @@ namespace ExpenseTracker.Domain.Expenses
 
             if (string.IsNullOrWhiteSpace(expenseType))
             {
-                errors.Add(Errors.ExpenseType.ValueIsRequired());
+                errors.Add(ErrorCodes.ExpenseType.ValueIsRequired());
             }
             else
             {
                 if (!Rules.ExpenseType.AllTypes.Any(type => string.Equals(type, expenseType, StringComparison.Ordinal)))
                 {
-                    errors.Add(Errors.ExpenseType.ValueIsInvalid());
+                    errors.Add(ErrorCodes.ExpenseType.ValueIsInvalid());
                 }
             }
 

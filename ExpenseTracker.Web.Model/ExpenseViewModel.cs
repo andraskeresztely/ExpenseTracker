@@ -7,11 +7,7 @@ namespace ExpenseTracker.Web.Model
     [ExcludeFromCodeCoverage]
     public sealed class ExpenseViewModel
     {
-        public static IReadOnlyCollection<string> Currencies => Rules.Spending.AllCurrencies;
-
         public int Id { get; set; }
-
-        public static DateTime? MaxTransactionDate => Rules.TransactionDate.MaxTransactionDate;
 
         [Required, 
          MinLength(Rules.Recipient.MinRecipientLength, 
@@ -37,6 +33,10 @@ namespace ExpenseTracker.Web.Model
          AllowedValues(Rules.ExpenseType.Food, Rules.ExpenseType.Drinks, Rules.ExpenseType.Other, 
             ErrorMessage = "Please use an Expense type of Food, Drinks or Other.")]
         public required string Type { get; set; }
+
+        public static IReadOnlyCollection<string> Currencies => Rules.Spending.AllCurrencies;
+
+        public static DateTime? MaxTransactionDate => Rules.TransactionDate.MaxTransactionDate;
 
         public static IReadOnlyCollection<string> Types => Rules.ExpenseType.AllTypes;
     }

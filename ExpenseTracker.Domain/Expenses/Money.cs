@@ -1,24 +1,32 @@
-﻿using ExpenseTracker.Domain.Abstractions;
+﻿using CSharpFunctionalExtensions;
+using ExpenseTracker.Domain.Abstractions;
 using ExpenseTracker.Domain.Expenses.Validation;
 
 namespace ExpenseTracker.Domain.Expenses
 {
-    public sealed record Money
+    public sealed class Money : ValueObject
     {
         public required decimal Amount { get; init; }
         public required string Currency { get; init; }
 
         private Money() {}
 
-        public static Result<Money> Create(decimal amount, string currency)
+        public static Result<Money, Errors> Create(decimal amount, string currency)
         {
             var (isValid, errors) = IsValid(amount, currency);
+
             if (!isValid)
             {
-                return new ErrorList(errors);
+                return new Errors(errors);
             }
 
             return new Money { Amount = amount, Currency = currency };
+        }
+
+        protected override IEnumerable<IComparable> GetEqualityComponents()
+        {
+            yield return Amount;
+            yield return Currency;
         }
 
         public override string ToString()
@@ -32,16 +40,16 @@ namespace ExpenseTracker.Domain.Expenses
 
             if (amount is < Rules.Spending.MinAmount or > Rules.Spending.MaxAmount)
             {
-                errors.Add(Errors.Spending.AmountIsInvalid());
+                errors.Add(ErrorCodes.Spending.AmountIsInvalid());
             }
 
             if (string.IsNullOrWhiteSpace(currency))
             {
-                errors.Add(Errors.Spending.CurrencyIsRequired());
+                errors.Add(ErrorCodes.Spending.CurrencyIsRequired());
             }
             else if (!Rules.Spending.AllCurrencies.Any(curr => string.Equals(curr, currency, StringComparison.Ordinal)))
             {
-                errors.Add(Errors.Spending.CurrencyIsInvalid());
+                errors.Add(ErrorCodes.Spending.CurrencyIsInvalid());
             }
 
             return (errors.Count == 0, errors);

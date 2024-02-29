@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CSharpFunctionalExtensions;
 using ExpenseTracker.Domain.Abstractions;
 using ExpenseTracker.Domain.Expenses;
 using ExpenseTracker.Persistence.LiteDb.Expenses;
@@ -13,22 +14,36 @@ namespace ExpenseTracker.Persistence.LiteDb
         {
             CreateMap<Expense, ExpenseModel>();
 
-            CreateMap<ExpenseModel, Result<Expense>>().ConvertUsing<ExpenseResolver>();
+            CreateMap<ExpenseModel, Result<Expense, Errors>>().ConvertUsing<ExpenseResolver>();
         }
 
-        internal sealed class ExpenseResolver : ITypeConverter<ExpenseModel, Result<Expense>>
+        internal sealed class ExpenseResolver : ITypeConverter<ExpenseModel, Result<Expense, Errors>>
         {
-            public Result<Expense> Convert(ExpenseModel source, Result<Expense> destination, ResolutionContext context)
+            public Result<Expense, Errors> Convert(
+                ExpenseModel source, 
+                Result<Expense, Errors> destination, 
+                ResolutionContext context)
             {
-                var result = Expense.Create(
-                    source.Id,
-                    source.Recipient,
-                    source.SpendingAmount,
-                    source.SpendingCurrency,
-                    source.TransactionDate,
-                    source.Type);
+                var idResult = ExpenseId.Create(source.Id);
+                var typeResult = ExpenseType.Create(source.Type);
+                var moneyResult = Money.Create(source.SpendingAmount, source.SpendingCurrency);
+                var transactionDateResult = TransactionDate.Create(source.TransactionDate);
+                var recipientResult = Recipient.Create(source.Recipient);
 
-                return result;
+                var partsResult = Result.Combine<object, Errors>(idResult, typeResult, moneyResult, transactionDateResult, recipientResult);
+                if (partsResult.IsFailure)
+                {
+                    return partsResult.Error;
+                }
+
+                var expenseResult = Expense.Create(
+                    idResult.Value,
+                    recipientResult.Value,
+                    moneyResult.Value,
+                    transactionDateResult.Value,
+                    typeResult.Value);
+
+                return expenseResult;
             }
         }
     }
