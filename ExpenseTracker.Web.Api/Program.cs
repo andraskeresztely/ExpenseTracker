@@ -1,3 +1,5 @@
+using Confluent.Kafka;
+using ExpenseTracker.Persistence.Kafka;
 using ExpenseTracker.Persistence.LiteDb;
 using Serilog;
 using System.Diagnostics.CodeAnalysis;
@@ -11,12 +13,10 @@ namespace ExpenseTracker.Web.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.Configure<LiteDbOptions>(builder.Configuration.GetSection("Settings:LiteDbOptions"));
-            builder.Services.AddLiteDb();
+            AddPersistenceProvider(builder);
             
             builder.Services.AddAutoMapper(typeof(ApiProfile));
-            builder.Services.AddAutoMapper(typeof(LiteDbProfile));
-
+          
             builder.Services.AddCors(option => option.AddPolicy("AllowPolicy", build =>
             {
                 build.WithOrigins(builder.Configuration.GetValue<string>("Settings:WebAppBlazorBaseUrl")!).AllowAnyMethod().AllowAnyHeader();
@@ -54,6 +54,29 @@ namespace ExpenseTracker.Web.Api
             app.MapHealthChecks("/health");
 
             app.Run();
+        }
+
+        private static void AddPersistenceProvider(WebApplicationBuilder builder)
+        {
+            switch(builder.Configuration.GetValue<string>("Settings:PersistenceProvider")!)
+            {
+                case "LiteDb":
+                {
+                    builder.Services.Configure<LiteDbOptions>(builder.Configuration.GetSection("Settings:LiteDbOptions"));
+                    builder.Services.AddLiteDb();
+                    builder.Services.AddAutoMapper(typeof(LiteDbProfile));
+                    break;
+                }
+                case "Kafka":
+                {
+                    builder.Services.Configure<KafkaOptions>(builder.Configuration.GetSection("Settings:KafkaOptions"));
+                    builder.Services.Configure<ConsumerConfig>(builder.Configuration.GetSection("Settings:KafkaOptions"));
+                    builder.Services.Configure<ProducerConfig>(builder.Configuration.GetSection("Settings:KafkaOptions"));
+                    builder.Services.AddKafka();
+                    builder.Services.AddAutoMapper(typeof(KafkaProfile));
+                    break;
+                }
+            }
         }
     }
 }

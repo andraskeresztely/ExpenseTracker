@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTracker.Web.Model", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DF905626-769D-4D58-80F6-D5008A35D0D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTracker.Domain.Tests", "ExpenseTracker.Domain.Tests\ExpenseTracker.Domain.Tests.csproj", "{995895D4-9DA1-4166-83E5-6B92E7BE117D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTracker.Domain.Tests", "ExpenseTracker.Domain.Tests\ExpenseTracker.Domain.Tests.csproj", "{995895D4-9DA1-4166-83E5-6B92E7BE117D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTracker.Persistence.Kafka", "ExpenseTracker.Persistence.Kafka\ExpenseTracker.Persistence.Kafka.csproj", "{D563C5DB-67B7-4F50-AC2F-7816A6601ADD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{995895D4-9DA1-4166-83E5-6B92E7BE117D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{995895D4-9DA1-4166-83E5-6B92E7BE117D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{995895D4-9DA1-4166-83E5-6B92E7BE117D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D563C5DB-67B7-4F50-AC2F-7816A6601ADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D563C5DB-67B7-4F50-AC2F-7816A6601ADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D563C5DB-67B7-4F50-AC2F-7816A6601ADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D563C5DB-67B7-4F50-AC2F-7816A6601ADD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
