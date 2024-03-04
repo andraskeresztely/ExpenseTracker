@@ -1,8 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
 using ExpenseTracker.Web.App.Blazor.Expenses.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ExpenseTracker.Web.App.Blazor
 {

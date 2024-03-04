@@ -2,15 +2,15 @@
 using CSharpFunctionalExtensions;
 using ExpenseTracker.Domain.Abstractions;
 using ExpenseTracker.Domain.Expenses;
-using ExpenseTracker.Persistence.LiteDb.Expenses;
+using ExpenseTracker.Persistence.Kafka.Expenses;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ExpenseTracker.Persistence.LiteDb
+namespace ExpenseTracker.Persistence.Kafka
 {
     [ExcludeFromCodeCoverage]
-    public sealed class LiteDbProfile : Profile
+    public sealed class KafkaProfile : Profile
     {
-        public LiteDbProfile()
+        public KafkaProfile()
         {
             CreateMap<Expense, ExpenseModel>();
 
@@ -20,8 +20,8 @@ namespace ExpenseTracker.Persistence.LiteDb
         internal sealed class ExpenseResolver : ITypeConverter<ExpenseModel, Result<Expense, Errors>>
         {
             public Result<Expense, Errors> Convert(
-                ExpenseModel source, 
-                Result<Expense, Errors> destination, 
+                ExpenseModel source,
+                Result<Expense, Errors> destination,
                 ResolutionContext context)
             {
                 var idResult = ExpenseId.Create(source.Id);

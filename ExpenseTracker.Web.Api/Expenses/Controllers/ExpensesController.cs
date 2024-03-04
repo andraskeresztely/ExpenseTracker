@@ -1,4 +1,5 @@
 using AutoMapper;
+using CSharpFunctionalExtensions;
 using ExpenseTracker.Domain.Abstractions;
 using ExpenseTracker.Domain.Expenses;
 using ExpenseTracker.Domain.Expenses.Persistence;
@@ -21,11 +22,11 @@ namespace ExpenseTracker.Web.Api.Expenses.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<int>> CreateAsync(ExpenseViewModel expense)
         {
-            var result = mapper.Map<Result<Expense>>(expense);
+            var result = mapper.Map<Result<Expense, Errors>>(expense);
 
             CheckForFailureAndThrow(result, null);
 
-            var expenseId = await repository.InsertAsync(result.Value);
+            var expenseId = await repository.CreateAsync(result.Value);
 
             return CreatedAtAction("Create", new { id = expenseId });
         }
@@ -81,7 +82,7 @@ namespace ExpenseTracker.Web.Api.Expenses.Controllers
                 return BadRequest("The parameter 'id' and the entity's id must be equal.");
             }
 
-            var result = mapper.Map<Result<Expense>>(expense);
+            var result = mapper.Map<Result<Expense, Errors>>(expense);
 
             CheckForFailureAndThrow(result, id);
 
@@ -90,14 +91,14 @@ namespace ExpenseTracker.Web.Api.Expenses.Controllers
             return updateResult ? Ok(new { id }) : NotFound(new { id });
         }
 
-        private void CheckForFailureAndThrow(Result<Expense> result, int? id)
+        private void CheckForFailureAndThrow(Result<Expense, Errors> result, int? id)
         {
             if (!result.IsFailure)
             {
                 return;
             }
 
-            foreach (var error in result.Errors)
+            foreach (var error in result.Error)
             {
                 logger.LogError("Id: {id}, ErrorCode: {Code}, ErrorMessage: {Message}", id, error.Code, error.Message);
             }

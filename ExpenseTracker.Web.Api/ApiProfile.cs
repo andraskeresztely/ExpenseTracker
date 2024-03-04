@@ -1,8 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using AutoMapper;
+﻿using AutoMapper;
+using CSharpFunctionalExtensions;
 using ExpenseTracker.Domain.Abstractions;
 using ExpenseTracker.Domain.Expenses;
 using ExpenseTracker.Web.Model;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ExpenseTracker.Web.Api
 {
@@ -13,22 +14,36 @@ namespace ExpenseTracker.Web.Api
         {
             CreateMap<Expense, ExpenseViewModel>();
 
-            CreateMap<ExpenseViewModel, Result<Expense>>().ConvertUsing<ExpenseResolver>();
+            CreateMap<ExpenseViewModel, Result<Expense, Errors>>().ConvertUsing<ExpenseResolver>();
         }
 
-        internal sealed class ExpenseResolver : ITypeConverter<ExpenseViewModel, Result<Expense>>
+        internal sealed class ExpenseResolver : ITypeConverter<ExpenseViewModel, Result<Expense, Errors>>
         {
-            public Result<Expense> Convert(ExpenseViewModel source, Result<Expense> destination, ResolutionContext context)
+            public Result<Expense, Errors> Convert(
+                ExpenseViewModel source, 
+                Result<Expense, Errors> destination, 
+                ResolutionContext context)
             {
-                var result = Expense.Create(
-                    source.Id,
-                    source.Recipient,
-                    source.SpendingAmount!.Value,
-                    source.SpendingCurrency,
-                    source.TransactionDate!.Value,
-                    source.Type);
+                var idResult = ExpenseId.Create(source.Id);
+                var typeResult = ExpenseType.Create(source.Type);
+                var moneyResult = Money.Create(source.SpendingAmount!.Value, source.SpendingCurrency);
+                var transactionDateResult = TransactionDate.Create(source.TransactionDate!.Value);
+                var recipientResult = Recipient.Create(source.Recipient);
 
-                return result;
+                var partsResult = Result.Combine<object, Errors>(idResult, typeResult, moneyResult, transactionDateResult, recipientResult);
+                if (partsResult.IsFailure)
+                {
+                    return partsResult.Error;
+                }
+
+                var expenseResult = Expense.Create(
+                    idResult.Value,
+                    recipientResult.Value,
+                    moneyResult.Value,
+                    transactionDateResult.Value,
+                    typeResult.Value);
+
+                return expenseResult;
             }
         }
     }

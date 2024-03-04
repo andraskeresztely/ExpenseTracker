@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CSharpFunctionalExtensions;
 using ExpenseTracker.Domain.Abstractions;
 using ExpenseTracker.Domain.Expenses;
 using ExpenseTracker.Domain.Expenses.Persistence;
@@ -10,44 +11,7 @@ namespace ExpenseTracker.Persistence.LiteDb.Expenses
         ILiteDatabase dbContext,
         IMapper mapper) : IExpenseRepository
     {
-        public async Task DeleteAsync(int id)
-        {
-            var expenses = dbContext.GetCollection<ExpenseModel>();
-
-            expenses.Delete(id);
-
-            await Task.CompletedTask;
-        }
-
-        public async Task<Result<Expense>> GetAsync(int id)
-        {
-            var expenses = dbContext.GetCollection<ExpenseModel>();
-
-            var expenseModel = expenses.FindById(id);
-
-            if (expenseModel == null)
-            {
-                return await Task.FromResult(new ErrorList([ Errors.General.NotFound() ]));
-            }
-
-            var result = mapper.Map<Result<Expense>>(expenseModel);
-
-            return await Task.FromResult(result);
-        }
-
-        public async IAsyncEnumerable<Result<Expense>> GetAllAsync()
-        {
-            var expenses = dbContext.GetCollection<ExpenseModel>();
-
-            foreach (var expenseModel in expenses.Query().ToEnumerable())
-            {
-                var result = mapper.Map<Result<Expense>>(expenseModel);
-
-                yield return await Task.FromResult(result);
-            }
-        }
-
-        public async Task<int> InsertAsync(Expense expense)
+        public Task<int> CreateAsync(Expense expense)
         {
             var expenses = dbContext.GetCollection<ExpenseModel>();
 
@@ -55,10 +19,49 @@ namespace ExpenseTracker.Persistence.LiteDb.Expenses
 
             expenses.Insert(expenseModel);
 
-            return await Task.FromResult(expenseModel.Id);
+            return Task.FromResult(expenseModel.Id);
         }
 
-        public async Task<bool> UpdateAsync(Expense expense)
+        public Task DeleteAsync(int id)
+        {
+            var expenses = dbContext.GetCollection<ExpenseModel>();
+
+            expenses.Delete(id);
+            
+            return Task.CompletedTask;
+        }
+
+        public Task<Result<Expense, Errors>> GetAsync(int id)
+        {
+            var expenses = dbContext.GetCollection<ExpenseModel>();
+
+            var expenseModel = expenses.FindById(id);
+
+            if (expenseModel == null)
+            {
+                Result<Expense, Errors> errorResult = new Errors([ErrorCodes.General.NotFound()]);
+
+                return Task.FromResult(errorResult);
+            }
+
+            var result = mapper.Map<Result<Expense, Errors>>(expenseModel);
+
+            return Task.FromResult(result);
+        }
+
+        public async IAsyncEnumerable<Result<Expense, Errors>> GetAllAsync()
+        {
+            var expenses = dbContext.GetCollection<ExpenseModel>();
+
+            foreach (var expenseModel in expenses.Query().ToEnumerable())
+            {
+                var result = mapper.Map<Result<Expense, Errors>>(expenseModel);
+
+                yield return await Task.FromResult(result);
+            }
+        }
+
+        public Task<bool> UpdateAsync(Expense expense)
         {
             var expenses = dbContext.GetCollection<ExpenseModel>();
 
@@ -66,7 +69,7 @@ namespace ExpenseTracker.Persistence.LiteDb.Expenses
 
             var result = expenses.Update(expenseModel);
 
-            return await Task.FromResult(result);
+            return Task.FromResult(result);
         }
     }
 }
