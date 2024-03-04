@@ -23,15 +23,8 @@ namespace ExpenseTracker.Persistence.Kafka.Expenses
                 Value = expenseModel
             };
 
-            try
-            {
-                kafkaClient.Producer.Produce(options.Value.Topic, message);
-                kafkaClient.Producer.Flush(TimeSpan.FromSeconds(options.Value.TimeoutSeconds));
-            }
-            catch (ProduceException<string, ExpenseModel> e)
-            {
-                Console.WriteLine($"Failed to deliver message: {e.Error.Reason}");
-            }
+            await kafkaClient.Producer.ProduceAsync(options.Value.Topic, message);
+            kafkaClient.Producer.Flush(TimeSpan.FromSeconds(options.Value.TimeoutSeconds));
            
             return await Task.FromResult(0);
         }
