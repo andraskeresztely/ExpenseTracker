@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using AutoMapper;
 using CSharpFunctionalExtensions;
 using ExpenseTracker.Domain.Abstractions;
@@ -10,7 +11,8 @@ using System.Net.Mime;
 namespace ExpenseTracker.Web.Api.Expenses.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [ApiVersion(1)]
+    [Route("api/v{v:apiVersion}/expenses")]
     public sealed class ExpensesController(
         ILogger<ExpensesController> logger,
         IMapper mapper,

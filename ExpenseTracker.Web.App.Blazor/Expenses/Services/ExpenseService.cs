@@ -9,27 +9,27 @@ namespace ExpenseTracker.Web.App.Blazor.Expenses.Services
 
         public async Task CreateAsync(ExpenseViewModel expense)
         {
-            await HttpClient.PostAsJsonAsync("Expenses", expense);
+            await HttpClient.PostAsJsonAsync("expenses", expense);
         }
 
         public async Task DeleteAsync(int id)
         {
-            await HttpClient.DeleteAsync($"Expenses/{id}");
+            await HttpClient.DeleteAsync($"expenses/{id}");
         }
 
         public async Task<ExpenseViewModel?> GetAsync(int id)
         {
-            return await HttpClient.GetFromJsonAsync<ExpenseViewModel>($"Expenses/{id}")!;
+            return await HttpClient.GetFromJsonAsync<ExpenseViewModel>($"expenses/{id}")!;
         }
 
         public IAsyncEnumerable<ExpenseViewModel?> GetAllAsync()
         {
-            return HttpClient.GetFromJsonAsAsyncEnumerable<ExpenseViewModel>("Expenses");
+            return HttpClient.GetFromJsonAsAsyncEnumerable<ExpenseViewModel>("expenses");
         }
 
         public async Task UpdateAsync(int id, ExpenseViewModel expense)
         {
-            await HttpClient.PutAsJsonAsync($"Expenses/{id}", expense);
+            await HttpClient.PutAsJsonAsync($"expenses/{id}", expense);
         }
     }
 }
