@@ -1,4 +1,5 @@
 name: ExpenseTracker
+run-name: Build the ExpenseTracker Solution
 
 on:
   push:
