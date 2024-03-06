@@ -4,13 +4,13 @@ using System.Text.Json;
 
 namespace ExpenseTracker.Persistence.Kafka.Serializers
 {
-    internal sealed class JsonSerializer<T> : IAsyncSerializer<T> where T : class
+    internal sealed class JsonSerializer<T> : ISerializer<T> where T : class
     {
-        Task<byte[]> IAsyncSerializer<T>.SerializeAsync(T data, SerializationContext context)
+        public byte[] Serialize(T data, SerializationContext context)
         {
             var jsonString = JsonSerializer.Serialize(data);
 
-            return Task.FromResult(Encoding.UTF8.GetBytes(jsonString));
+            return Encoding.UTF8.GetBytes(jsonString);
         }
     }
 }

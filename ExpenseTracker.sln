@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTracker.Domain.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTracker.Persistence.Kafka", "ExpenseTracker.Persistence.Kafka\ExpenseTracker.Persistence.Kafka.csproj", "{D563C5DB-67B7-4F50-AC2F-7816A6601ADD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTracker.Persistence.EfCore", "ExpenseTracker.Persistence.EfCore\ExpenseTracker.Persistence.EfCore.csproj", "{6C651282-D2B2-467F-9767-941813B05C7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{D563C5DB-67B7-4F50-AC2F-7816A6601ADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D563C5DB-67B7-4F50-AC2F-7816A6601ADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D563C5DB-67B7-4F50-AC2F-7816A6601ADD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C651282-D2B2-467F-9767-941813B05C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C651282-D2B2-467F-9767-941813B05C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C651282-D2B2-467F-9767-941813B05C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C651282-D2B2-467F-9767-941813B05C7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

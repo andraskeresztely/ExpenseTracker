@@ -11,7 +11,7 @@ namespace ExpenseTracker.Persistence.Kafka
         public static IServiceCollection AddKafka(this IServiceCollection services)
         {
             services.AddSingleton<KafkaClient>();
-            services.AddTransient<IExpenseRepository, ExpenseProducerConsumer>();
+            services.AddSingleton<IExpenseRepository, ExpenseProducerConsumer>();
 
             return services;
         }

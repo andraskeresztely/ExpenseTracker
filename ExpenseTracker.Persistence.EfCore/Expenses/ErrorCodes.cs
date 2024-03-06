@@ -1,7 +1,7 @@
 ﻿using ExpenseTracker.Domain.Abstractions;
 using System.Diagnostics.CodeAnalysis;
 
-namespace ExpenseTracker.Persistence.LiteDb.Expenses
+namespace ExpenseTracker.Persistence.EfCore.Expenses
 {
     [ExcludeFromCodeCoverage]
     internal static class ErrorCodes

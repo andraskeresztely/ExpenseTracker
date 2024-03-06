@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExpenseTracker.Domain\ExpenseTracker.Domain.csproj" />
+    <ProjectReference Include="..\ExpenseTracker.Persistence.EfCore\ExpenseTracker.Persistence.EfCore.csproj" />
     <ProjectReference Include="..\ExpenseTracker.Persistence.Kafka\ExpenseTracker.Persistence.Kafka.csproj" />
     <ProjectReference Include="..\ExpenseTracker.Persistence.LiteDb\ExpenseTracker.Persistence.LiteDb.csproj" />
     <ProjectReference Include="..\ExpenseTracker.Web.Model\ExpenseTracker.Web.Model.csproj" />

@@ -12,7 +12,7 @@ namespace ExpenseTracker.Web.App.Blazor.Expenses.Pages
         [Inject]
         private NavigationManager NavigationManager { get; set; } = default!;
 
-        private async Task<ExpenseViewModel> InitAsync()
+        private static Task<ExpenseViewModel> InitAsync()
         {
             var expenseViewModel = new ExpenseViewModel
             {
@@ -23,7 +23,7 @@ namespace ExpenseTracker.Web.App.Blazor.Expenses.Pages
                 Type = string.Empty
             };
 
-            return await Task.FromResult(expenseViewModel);
+            return Task.FromResult(expenseViewModel);
         }
 
         private async Task SaveAsync(ExpenseViewModel expense)
