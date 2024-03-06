@@ -1,5 +1,4 @@
 name: ExpenseTracker
-run-name: Build the ExpenseTracker Solution
 
 on:
   push:
@@ -9,7 +8,7 @@ on:
 
 jobs:
   build:
-
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
