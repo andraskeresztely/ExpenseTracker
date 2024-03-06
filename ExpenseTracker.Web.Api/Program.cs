@@ -1,8 +1,12 @@
+using Asp.Versioning;
 using Confluent.Kafka;
 using ExpenseTracker.Persistence.EfCore;
 using ExpenseTracker.Persistence.Kafka;
 using ExpenseTracker.Persistence.LiteDb;
+using ExpenseTracker.Web.Api.Swagger;
+using Microsoft.Extensions.Options;
 using Serilog;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Diagnostics.CodeAnalysis;
 
 namespace ExpenseTracker.Web.Api
@@ -26,7 +30,23 @@ namespace ExpenseTracker.Web.Api
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSingleton<IConfigureOptions<SwaggerGenOptions>, SwaggerGenOptionsConfig>();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.OperationFilter<SwaggerDefaultValues>();
+            });
+
+            builder.Services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(), new HeaderApiVersionReader("X-Api-Version"));
+                options.DefaultApiVersion = new ApiVersion(1);
+                options.ReportApiVersions = true;
+            }).AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'V";
+                options.SubstituteApiVersionInUrl = true;
+            });
 
             builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
             builder.Services.AddHealthChecks();
@@ -41,7 +61,17 @@ namespace ExpenseTracker.Web.Api
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(options =>
+                {
+                    var descriptions = app.DescribeApiVersions();
+
+                    foreach (var description in descriptions)
+                    {
+                        var url = $"/swagger/{description.GroupName}/swagger.json";
+                        var name = description.GroupName.ToUpperInvariant();
+                        options.SwaggerEndpoint(url, name);
+                    }
+                });
             }
 
             app.UseCors("AllowPolicy");
