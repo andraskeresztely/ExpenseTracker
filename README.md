@@ -1,3 +1,5 @@
+![workflow status badge](https://github.com/andraskeresztely/ExpenseTracker/actions/workflows/expense-tracker.yml/badge.svg)
+
 # Expense Tracker
 
 Simple .NET web application for tracking expenses.
