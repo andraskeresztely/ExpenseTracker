@@ -11,8 +11,12 @@ namespace ExpenseTracker.Domain.Tests.Expenses
         private static readonly ExpenseId CorrectId = ExpenseId.Create(0).Value;
         private static readonly Recipient CorrectRecipient = Recipient.Create(string.Join(string.Empty, Fixture.CreateMany<char>(2))).Value;
         private static readonly Money CorrectSpending = Money.Create(1, "CHF").Value;
+        private static readonly Money CorrectSpendingDifferingByAmount = Money.Create(2, "CHF").Value;
+        private static readonly Money CorrectSpendingDifferingByCurrency = Money.Create(1, "USD").Value;
         private static readonly TransactionDate CorrectTransactionDate = TransactionDate.Create(DateTime.Today).Value;
+        private static readonly TransactionDate AnotherCorrectTransactionDate = TransactionDate.Create(DateTime.Today.AddDays(-1)).Value;
         private static readonly ExpenseType CorrectType = ExpenseType.Create("Food").Value;
+        private static readonly ExpenseType AnotherCorrectType = ExpenseType.Create("Drinks").Value;
 
         [Test]
         public void GivenCorrectParameters_WhenExpenseIsCreated_SuccessResultReturnedAndGettersReturnCorrectValues()
@@ -104,6 +108,46 @@ namespace ExpenseTracker.Domain.Tests.Expenses
 
             // Assert
             result.Should().BeTrue();
+        }
+
+        [Test]
+        public void GivenTwoDifferentMoneyInstancesWhichDifferByAmount_WhenCompared_CorrectValueReturned()
+        {
+            // Act
+            var result = CorrectSpending == CorrectSpendingDifferingByAmount;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void GivenTwoDifferentMoneyInstancesWhichDifferByCurrency_WhenCompared_CorrectValueReturned2()
+        {
+            // Act
+            var result = CorrectSpending == CorrectSpendingDifferingByCurrency;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void GivenTwoDifferentExpenseTypeInstances_WhenCompared_CorrectValueReturned()
+        {
+            // Act
+            var result = CorrectType == AnotherCorrectType;
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void GivenTwoDifferentTransactionDateInstances_WhenCompared_CorrectValueReturned()
+        {
+            // Act
+            var result = CorrectTransactionDate == AnotherCorrectTransactionDate;
+
+            // Assert
+            result.Should().BeFalse();
         }
     }
 }

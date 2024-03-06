@@ -19,7 +19,7 @@ namespace ExpenseTracker.Persistence.LiteDb
                 return new LiteDatabase(options!.Value.DatabasePath);
             });
 
-            services.AddTransient<IExpenseRepository, ExpenseRepository>();
+            services.AddSingleton<IExpenseRepository, ExpenseRepository>();
 
             return services;
         }

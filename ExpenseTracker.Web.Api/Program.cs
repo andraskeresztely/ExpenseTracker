@@ -1,4 +1,5 @@
 using Confluent.Kafka;
+using ExpenseTracker.Persistence.EfCore;
 using ExpenseTracker.Persistence.Kafka;
 using ExpenseTracker.Persistence.LiteDb;
 using Serilog;
@@ -60,6 +61,13 @@ namespace ExpenseTracker.Web.Api
         {
             switch(builder.Configuration.GetValue<string>("Settings:PersistenceProvider")!)
             {
+                case "EfCore":
+                {
+                    builder.Services.Configure<EfCoreOptions>(builder.Configuration.GetSection("Settings:EfCoreOptions"));
+                    builder.Services.AddEfCore();
+                    builder.Services.AddAutoMapper(typeof(EfCoreProfile));
+                    break;
+                }
                 case "LiteDb":
                 {
                     builder.Services.Configure<LiteDbOptions>(builder.Configuration.GetSection("Settings:LiteDbOptions"));

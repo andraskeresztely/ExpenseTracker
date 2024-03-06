@@ -31,6 +31,18 @@ namespace ExpenseTracker.Persistence.LiteDb.Expenses
             return Task.CompletedTask;
         }
 
+        public async IAsyncEnumerable<Result<Expense, Errors>> GetAllAsync()
+        {
+            var expenses = dbContext.GetCollection<ExpenseModel>();
+
+            foreach (var expenseModel in expenses.Query().ToEnumerable())
+            {
+                var result = mapper.Map<Result<Expense, Errors>>(expenseModel);
+
+                yield return await Task.FromResult(result);
+            }
+        }
+
         public Task<Result<Expense, Errors>> GetAsync(int id)
         {
             var expenses = dbContext.GetCollection<ExpenseModel>();
@@ -47,18 +59,6 @@ namespace ExpenseTracker.Persistence.LiteDb.Expenses
             var result = mapper.Map<Result<Expense, Errors>>(expenseModel);
 
             return Task.FromResult(result);
-        }
-
-        public async IAsyncEnumerable<Result<Expense, Errors>> GetAllAsync()
-        {
-            var expenses = dbContext.GetCollection<ExpenseModel>();
-
-            foreach (var expenseModel in expenses.Query().ToEnumerable())
-            {
-                var result = mapper.Map<Result<Expense, Errors>>(expenseModel);
-
-                yield return await Task.FromResult(result);
-            }
         }
 
         public Task<bool> UpdateAsync(Expense expense)

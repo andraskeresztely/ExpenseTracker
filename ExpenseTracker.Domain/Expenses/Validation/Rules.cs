@@ -1,5 +1,8 @@
-﻿namespace ExpenseTracker.Domain.Expenses.Validation
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace ExpenseTracker.Domain.Expenses.Validation
 {
+    [ExcludeFromCodeCoverage]
     public static class Rules
     {
         public static class ExpenseType
@@ -8,6 +11,8 @@
             public const string Drinks = "Drinks";
             public const string Other = "Other";
             public static readonly IReadOnlyCollection<string> AllTypes = [Food, Drinks, Other];
+
+            public const int MaxExpenseTypeLength = 255;
         }
 
         public static class Recipient
@@ -25,6 +30,8 @@
             public const string EUR = nameof(EUR);
             public const string USD = nameof(USD);
             public static readonly IReadOnlyCollection<string> AllCurrencies = [CHF, EUR, USD];
+
+            public const int MaxCurrencyLength = 3;
         }
 
         public static class TransactionDate

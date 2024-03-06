@@ -1,7 +1,9 @@
 ﻿using ExpenseTracker.Domain.Abstractions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ExpenseTracker.Domain.Expenses.Validation
 {
+    [ExcludeFromCodeCoverage]
     public static class ErrorCodes
     {
         public static class ExpenseId

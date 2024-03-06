@@ -26,8 +26,6 @@ namespace ExpenseTracker.Web.App.Blazor.Expenses.Components
 
             _editContext = new EditContext(_expense!);
             _editContext.OnFieldChanged += HandleFieldChanged!;
-
-            await Task.CompletedTask;
         }
 
         private async Task Save()

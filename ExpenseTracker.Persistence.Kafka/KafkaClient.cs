@@ -1,5 +1,4 @@
 ﻿using Confluent.Kafka;
-using Confluent.Kafka.SyncOverAsync;
 using ExpenseTracker.Persistence.Kafka.Expenses;
 using ExpenseTracker.Persistence.Kafka.Serializers;
 using Microsoft.Extensions.Options;
@@ -15,12 +14,12 @@ namespace ExpenseTracker.Persistence.Kafka
         public IConsumer<string, ExpenseModel> Consumer { get; } 
             = new ConsumerBuilder<string, ExpenseModel>(consumerConfig.Value)
                 .SetKeyDeserializer(Deserializers.Utf8)
-                .SetValueDeserializer(new JsonDeserializer<ExpenseModel>().AsSyncOverAsync())
+                .SetValueDeserializer(new JsonDeserializer<ExpenseModel>())
                 .Build();
 
         public IProducer<string, ExpenseModel> Producer { get; } 
             = new ProducerBuilder<string, ExpenseModel>(producerConfig.Value)
-                .SetValueSerializer(new JsonSerializer<ExpenseModel>().AsSyncOverAsync())
+                .SetValueSerializer(new JsonSerializer<ExpenseModel>())
                 .Build();
 
         public void Dispose()
