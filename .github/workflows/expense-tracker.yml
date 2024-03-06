@@ -8,23 +8,34 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build ExpenseTracker
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
+    - name: Check out code from source control
       uses: actions/checkout@v4
 
-    - name: Setup .NET
+    - name: Setup .NET environment
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
-    - name: Restore
+    - name: Restore NuGet packages
       run: dotnet restore
 
-    - name: Test
-      run: dotnet test --verbosity normal
+    - name: Run unit tests
+      run: dotnet test --verbosity normal --collect:"XPlat Code Coverage" --logger trx --results-directory coverage
 
-    - name: Build
+    - name: Add code coverage report
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: 'coverage/*/coverage.cobertura.xml'
+        badge: true
+        format: 'markdown'
+        output: 'both'
+
+    - name: Write code coverage report to job summary
+      run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+    
+    - name: Build solution
       run: dotnet build --no-restore
