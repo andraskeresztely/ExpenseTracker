@@ -1,0 +1,15 @@
+{
+  "stryker-config": {
+    "solution": "ExpenseTracker.sln",
+    "project": "ExpenseTracker.Domain.csproj",
+    "reporters": [
+      "html",
+      "progress",
+      "dashboard"
+    ],
+    "project-info": {
+      "name": "github.com/andraskeresztely/ExpenseTracker",
+      "version": "main"
+    }
+  }
+}
