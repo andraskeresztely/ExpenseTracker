@@ -26,7 +26,7 @@ jobs:
     - name: Run unit tests
       run: dotnet test --verbosity normal --collect:"XPlat Code Coverage" --logger trx --results-directory coverage
 
-    - name: Add code coverage report
+    - name: Add unit test coverage report
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
         filename: 'coverage/*/coverage.cobertura.xml'
@@ -36,6 +36,17 @@ jobs:
 
     - name: Write code coverage report to job summary
       run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+
+    - name: Run mutation tests
+      uses: stryker-mutator/github-action@v0.0.1
+      with:
+        testProject: "ExpenseTracker.Domain.Tests/"
+        
+    - name: Add mutation test result report
+      uses: actions/upload-artifact@v3
+      with:
+        name: html-report
+        path: ${{github.workspace}}/ExpenseTracker.Domain.Tests/StrykerOutput/**/**/*.html
     
     - name: Build solution
       run: dotnet build --no-restore
