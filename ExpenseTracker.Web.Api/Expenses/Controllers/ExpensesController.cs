@@ -19,10 +19,9 @@ namespace ExpenseTracker.Web.Api.Expenses.Controllers
         IExpenseRepository repository) : ControllerBase
     {
         [HttpPost]
-        [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<int>> CreateAsync(ExpenseViewModel expense)
+        public async Task<IActionResult> CreateAsync(ExpenseViewModel expense)
         {
             var result = mapper.Map<Result<Expense, Errors>>(expense);
 
@@ -74,7 +73,7 @@ namespace ExpenseTracker.Web.Api.Expenses.Controllers
         }
 
         [HttpPut("{id}")]
-        [ProducesResponseType<ExpenseViewModel>(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync(int id, ExpenseViewModel expense)
