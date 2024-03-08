@@ -1,4 +1,4 @@
-![Workflow status badge](https://github.com/andraskeresztely/ExpenseTracker/actions/workflows/expense-tracker.yml/badge.svg)[![Mutation testing badge](https://img.shields.io/endpoint?style=plastic&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fandraskeresztely%2FExpenseTracker%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/andraskeresztely/ExpenseTracker/main)
+![Workflow status badge](https://github.com/andraskeresztely/ExpenseTracker/actions/workflows/expense-tracker.yml/badge.svg) [![Mutation testing badge](https://img.shields.io/endpoint?style=plastic&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fandraskeresztely%2FExpenseTracker%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/andraskeresztely/ExpenseTracker/main)
 
 # Expense Tracker
 
