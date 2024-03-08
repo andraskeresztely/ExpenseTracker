@@ -24,9 +24,7 @@ namespace ExpenseTracker.Persistence.EfCore.Expenses
         {
             await using var dbContext = new ExpenseContext(options);
 
-            var expenseModel = dbContext.Expenses.FirstOrDefault(expense => expense.Id == id);
-
-            if (expenseModel != null)
+            if(await dbContext.Expenses.FindAsync(id) is { } expenseModel)
             {
                 dbContext.Expenses.Remove(expenseModel);
 
@@ -50,9 +48,7 @@ namespace ExpenseTracker.Persistence.EfCore.Expenses
         {
             await using var dbContext = new ExpenseContext(options);
 
-            var expenseModel = dbContext.Expenses.FirstOrDefault(expense => expense.Id == id);
-
-            if (expenseModel == null)
+            if(await dbContext.Expenses.FindAsync(id) is not { } expenseModel)
             {
                 Result<Expense, Errors> errorResult = new Errors([ErrorCodes.General.NotFound()]);
 
@@ -68,9 +64,12 @@ namespace ExpenseTracker.Persistence.EfCore.Expenses
         {
             await using var dbContext = new ExpenseContext(options);
 
-            var expenseModel = mapper.Map<ExpenseModel>(expense);
+            if (await dbContext.Expenses.FindAsync(expense.Id.Value) is not { } expenseModel)
+            {
+                return false;
+            }
 
-            dbContext.Expenses.Update(expenseModel);
+            mapper.Map(expense, expenseModel);
 
             await dbContext.SaveChangesAsync();
 
