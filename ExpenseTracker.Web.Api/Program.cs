@@ -29,6 +29,8 @@ namespace ExpenseTracker.Web.Api
 
             builder.Services.AddControllers();
 
+            builder.Services.AddProblemDetails();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSingleton<IConfigureOptions<SwaggerGenOptions>, SwaggerGenOptionsConfig>();
             builder.Services.AddSwaggerGen(options =>
@@ -57,6 +59,8 @@ namespace ExpenseTracker.Web.Api
             var app = builder.Build();
 
             app.UseExceptionHandler(_ => { });
+
+            app.UseStatusCodePages();
 
             if (app.Environment.IsDevelopment())
             {

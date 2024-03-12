@@ -36,7 +36,7 @@ namespace ExpenseTracker.Persistence.EfCore.Expenses
         {
             await using var dbContext = new ExpenseContext(options);
 
-            foreach (var expenseModel in dbContext.Expenses)
+            await foreach (var expenseModel in dbContext.Expenses.AsAsyncEnumerable())
             {
                 var result = mapper.Map<Result<Expense, Errors>>(expenseModel);
 
