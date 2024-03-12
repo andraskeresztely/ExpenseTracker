@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DF905626
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTracker.Domain.Tests", "ExpenseTracker.Domain.Tests\ExpenseTracker.Domain.Tests.csproj", "{995895D4-9DA1-4166-83E5-6B92E7BE117D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTracker.Persistence.Kafka", "ExpenseTracker.Persistence.Kafka\ExpenseTracker.Persistence.Kafka.csproj", "{D563C5DB-67B7-4F50-AC2F-7816A6601ADD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTracker.Persistence.Kafka", "ExpenseTracker.Persistence.Kafka\ExpenseTracker.Persistence.Kafka.csproj", "{D563C5DB-67B7-4F50-AC2F-7816A6601ADD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTracker.Persistence.EfCore", "ExpenseTracker.Persistence.EfCore\ExpenseTracker.Persistence.EfCore.csproj", "{6C651282-D2B2-467F-9767-941813B05C7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTracker.Persistence.EfCore", "ExpenseTracker.Persistence.EfCore\ExpenseTracker.Persistence.EfCore.csproj", "{6C651282-D2B2-467F-9767-941813B05C7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

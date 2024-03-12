@@ -6,7 +6,6 @@ using ExpenseTracker.Domain.Expenses;
 using ExpenseTracker.Domain.Expenses.Persistence;
 using ExpenseTracker.Web.Model;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Mime;
 
 namespace ExpenseTracker.Web.Api.Expenses.Controllers
 {
@@ -50,7 +49,14 @@ namespace ExpenseTracker.Web.Api.Expenses.Controllers
 
             if (result.IsFailure)
             {
-                return NotFound(new { id });
+                var details = new ProblemDetails
+                {
+                    Extensions = { { "id", id } },
+                    Status = StatusCodes.Status404NotFound,
+                    Title = "Expense not found.",
+                };
+
+                return NotFound(details);
             }
 
             CheckForFailureAndThrow(result, id);
@@ -80,7 +86,13 @@ namespace ExpenseTracker.Web.Api.Expenses.Controllers
         {
             if (id != expense.Id)
             {
-                return BadRequest("The parameter 'id' and the entity's id must be equal.");
+                var badRequestDetails = new ProblemDetails
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "The parameter 'id' and the entity's id must be equal."
+                };
+
+                return BadRequest(badRequestDetails);
             }
 
             var result = mapper.Map<Result<Expense, Errors>>(expense);
@@ -89,7 +101,19 @@ namespace ExpenseTracker.Web.Api.Expenses.Controllers
 
             var updateResult = await repository.UpdateAsync(result.Value);
 
-            return updateResult ? Ok(new { id }) : NotFound(new { id });
+            if (updateResult)
+            {
+                return Ok(new { id });
+            }
+
+            var notFoundDetails = new ProblemDetails
+            {
+                Extensions = { { "id", id } },
+                Status = StatusCodes.Status404NotFound,
+                Title = "Expense not found."
+            };
+
+            return NotFound(notFoundDetails);
         }
 
         private void CheckForFailureAndThrow(Result<Expense, Errors> result, int? id)
