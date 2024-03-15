@@ -31,7 +31,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.ExpenseId.ValueIsInvalid());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.ExpenseId.ErrorCodes.ValueIsInvalid());
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.Recipient.NameIsRequired());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.Recipient.ErrorCodes.NameIsRequired());
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.Recipient.LengthIsInvalid());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.Recipient.ErrorCodes.LengthIsInvalid());
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.Recipient.LengthIsInvalid());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.Recipient.ErrorCodes.LengthIsInvalid());
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.Spending.AmountIsInvalid());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.Money.ErrorCodes.AmountIsInvalid());
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.Spending.AmountIsInvalid());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.Money.ErrorCodes.AmountIsInvalid());
         }
 
         [TestCase("")]
@@ -125,7 +125,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.Spending.CurrencyIsRequired());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.Money.ErrorCodes.CurrencyIsRequired());
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.Spending.CurrencyIsInvalid());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.Money.ErrorCodes.CurrencyIsInvalid());
         }
 
         [TestCase("CHF")]
@@ -161,7 +161,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.TransactionDate.ValueIsRequired());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.TransactionDate.ErrorCodes.ValueIsRequired());
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.TransactionDate.ValueIsInvalid());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.TransactionDate.ErrorCodes.ValueIsInvalid());
         }
 
         [Test]
@@ -196,7 +196,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.ExpenseType.ValueIsRequired());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.ExpenseType.ErrorCodes.ValueIsRequired());
         }
 
         [Test]
@@ -208,7 +208,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             // Assert
             result.IsFailure.Should().BeTrue();
             result.Error.Count.Should().Be(1);
-            result.Error.First().Should().Be(ErrorCodes.ExpenseType.ValueIsInvalid());
+            result.Error.First().Should().Be(Domain.Expenses.Validation.ExpenseType.ErrorCodes.ValueIsInvalid());
         }
 
         [TestCase("Drinks")]

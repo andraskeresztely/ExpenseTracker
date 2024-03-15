@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using ExpenseTracker.Domain.Abstractions;
-using ExpenseTracker.Domain.Expenses.Validation;
+using ExpenseTracker.Domain.Expenses.Validation.TransactionDate;
 
 namespace ExpenseTracker.Domain.Expenses
 {
@@ -10,9 +10,11 @@ namespace ExpenseTracker.Domain.Expenses
 
         private TransactionDate() {}
 
+        private static readonly TransactionDateValidators Validators = new();
+
         public static Result<TransactionDate, Errors> Create(DateTime transactionDate)
         {
-            var (isValid, errors) = IsValid(transactionDate);
+            var (isValid, errors) = Validators.AreValid(new TransactionDate { Value = transactionDate });
 
             if (!isValid)
             {
@@ -33,21 +35,5 @@ namespace ExpenseTracker.Domain.Expenses
         }
 
         public static implicit operator DateTime(TransactionDate transactionDate) => transactionDate.Value;
-
-        private static (bool IsValid, List<Error> Errors) IsValid(DateTime transactionDate)
-        {
-            List<Error> errors = [];
-
-            if (transactionDate == DateTime.MinValue)
-            {
-                errors.Add(ErrorCodes.TransactionDate.ValueIsRequired());
-            }
-            else if (transactionDate.Date > Rules.TransactionDate.MaxTransactionDate.Date)
-            {
-                errors.Add(ErrorCodes.TransactionDate.ValueIsInvalid());
-            }
-
-            return (errors.Count == 0, errors);
-        }
     }
 }
