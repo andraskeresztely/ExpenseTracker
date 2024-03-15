@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using ExpenseTracker.Domain.Abstractions;
-using ExpenseTracker.Domain.Expenses.Validation;
+using ExpenseTracker.Domain.Expenses.Validation.ExpenseId;
 
 namespace ExpenseTracker.Domain.Expenses
 {
@@ -10,9 +10,11 @@ namespace ExpenseTracker.Domain.Expenses
 
         private ExpenseId() { }
 
+        private static readonly ExpenseIdValidators Validators = new();
+
         public static Result<ExpenseId, Errors> Create(int expenseId)
         {
-            var (isValid, errors) = IsValid(expenseId);
+            var (isValid, errors) = Validators.AreValid(new ExpenseId { Value = expenseId });
 
             if (!isValid)
             {
@@ -28,17 +30,5 @@ namespace ExpenseTracker.Domain.Expenses
         }
 
         public static implicit operator int(ExpenseId expenseId) => expenseId.Value;
-
-        private static (bool IsValid, List<Error> Errors) IsValid(int expenseId)
-        {
-            List<Error> errors = [];
-
-            if (expenseId < 0)
-            {
-                errors.Add(ErrorCodes.ExpenseId.ValueIsInvalid());
-            }
-
-            return (errors.Count == 0, errors);
-        }
     }
 }

@@ -1,9 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
+using System.Collections.ObjectModel;
 
 namespace ExpenseTracker.Domain.Abstractions
 {
-    public sealed class Errors(IList<Error> errors) : ReadOnlyCollection<Error>(errors), ICombine
+    public sealed class Errors(IEnumerable<Error> errors) : ReadOnlyCollection<Error>(errors.ToList()), ICombine
     {
         public ICombine Combine(ICombine value)
         {
