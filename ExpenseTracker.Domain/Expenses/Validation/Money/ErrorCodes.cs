@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace ExpenseTracker.Domain.Expenses.Validation.Money
 {
     [ExcludeFromCodeCoverage]
-    public static class ErrorCodes
+    internal static class ErrorCodes
     {
         public static Error AmountIsInvalid() => new("spending.amount.invalid", "Spending amount is invalid.");
 
