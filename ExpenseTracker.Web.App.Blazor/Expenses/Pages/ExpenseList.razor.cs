@@ -60,7 +60,7 @@ namespace ExpenseTracker.Web.App.Blazor.Expenses.Pages
             var dialog = await DialogService.ShowAsync<ConfirmDialog>("Are you sure?", parameters, options);
             var result = await dialog.Result;
 
-            if (!result.Canceled)
+            if (result != null && !result.Canceled)
             {
                 await ExpenseService.DeleteAsync(id);
                 await LoadItems();
