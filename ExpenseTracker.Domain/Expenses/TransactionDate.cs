@@ -4,7 +4,7 @@ using ExpenseTracker.Domain.Expenses.Validation.TransactionDate;
 
 namespace ExpenseTracker.Domain.Expenses
 {
-    public sealed class TransactionDate : ValueObject
+    public sealed class TransactionDate : ComparableValueObject
     {
         public required DateTime Value { get; init; }
 
@@ -24,7 +24,7 @@ namespace ExpenseTracker.Domain.Expenses
             return new TransactionDate { Value = transactionDate };
         }
 
-        protected override IEnumerable<IComparable> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return Value;
         }

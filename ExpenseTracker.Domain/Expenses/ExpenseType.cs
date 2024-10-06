@@ -4,7 +4,7 @@ using ExpenseTracker.Domain.Expenses.Validation.ExpenseType;
 
 namespace ExpenseTracker.Domain.Expenses
 {
-    public sealed class ExpenseType : ValueObject
+    public sealed class ExpenseType : ComparableValueObject
     {
         public required string Value { get; init; }
 
@@ -24,7 +24,7 @@ namespace ExpenseTracker.Domain.Expenses
             return new ExpenseType { Value = expenseType };
         }
 
-        protected override IEnumerable<IComparable> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return Value;
         }

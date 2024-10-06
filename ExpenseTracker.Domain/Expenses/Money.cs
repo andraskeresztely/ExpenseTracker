@@ -4,7 +4,7 @@ using ExpenseTracker.Domain.Expenses.Validation.Money;
 
 namespace ExpenseTracker.Domain.Expenses
 {
-    public sealed class Money : ValueObject
+    public sealed class Money : ComparableValueObject
     {
         public required decimal Amount { get; init; }
         public required string Currency { get; init; }
@@ -25,7 +25,7 @@ namespace ExpenseTracker.Domain.Expenses
             return new Money { Amount = amount, Currency = currency };
         }
 
-        protected override IEnumerable<IComparable> GetEqualityComponents()
+        protected override IEnumerable<IComparable> GetComparableEqualityComponents()
         {
             yield return Amount;
             yield return Currency;

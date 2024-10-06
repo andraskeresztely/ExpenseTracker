@@ -14,7 +14,7 @@
         <MudTd DataLabel="Transaction date">@context.TransactionDate!.Value.ToString("dd/MM/yyyy")</MudTd>
         <MudTd DataLabel="Recipient">@context.Recipient</MudTd>
         <MudTd DataLabel="Type">@context.Type</MudTd>
-        <MudTd DataLabel="Type">@context.SpendingCurrency @context.SpendingAmount</MudTd>
+        <MudTd DataLabel="Amount">@context.SpendingCurrency @context.SpendingAmount</MudTd>
         <MudTd>
             <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(_ => EditExpense(context.Id))">Edit</MudButton>
             <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@(_ => OpenConfirmDialog(context.Id))">Delete</MudButton>
