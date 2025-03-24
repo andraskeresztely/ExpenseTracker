@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 using ExpenseTracker.Domain.Abstractions;
-using FluentAssertions;
+using Shouldly;
 
 namespace ExpenseTracker.Domain.Tests.Abstractions
 {
@@ -22,9 +22,9 @@ namespace ExpenseTracker.Domain.Tests.Abstractions
             var result = errorsOne.Combine(errorsTwo);
 
             // Assert
-            result.Should().BeOfType<Errors>();
-            ((Errors)result).Count.Should().Be(2);
-            ((Errors)result).Select(error => error.Code).Should().BeEquivalentTo(new List<string> {errorCodeOne, errorCodeTwo});
+            result.ShouldBeOfType<Errors>();
+            ((Errors)result).Count.ShouldBe(2);
+            ((Errors)result).Select(error => error.Code).ShouldBe([errorCodeOne, errorCodeTwo]);
         }
     }
 }

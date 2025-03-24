@@ -5,7 +5,7 @@ namespace ExpenseTracker.Web.App.Blazor.Components
 {
     public partial class ConfirmDialog
     {
-        [CascadingParameter] private MudDialogInstance? Dialog { get; set; }
+        [CascadingParameter] private IMudDialogInstance? Dialog { get; set; }
 
         [Parameter] public string? ContentText { get; set; }
 

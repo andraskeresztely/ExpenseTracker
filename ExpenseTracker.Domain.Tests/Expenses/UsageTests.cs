@@ -1,6 +1,6 @@
 ﻿using AutoFixture;
 using ExpenseTracker.Domain.Expenses;
-using FluentAssertions;
+using Shouldly;
 
 namespace ExpenseTracker.Domain.Tests.Expenses
 {
@@ -25,14 +25,14 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             var result = Expense.Create(CorrectId, CorrectRecipient, CorrectSpending, CorrectTransactionDate, CorrectType);
 
             // Assert
-            result.IsSuccess.Should().BeTrue();
+            result.IsSuccess.ShouldBeTrue();
 
-            result.Value.Id.Value.Should().Be(CorrectId.Value);
-            result.Value.Recipient.Name.Should().Be(CorrectRecipient.Name);
-            result.Value.Spending.Amount.Should().Be(CorrectSpending.Amount);
-            result.Value.Spending.Currency.Should().Be(CorrectSpending.Currency);
-            result.Value.TransactionDate.Value.Should().Be(CorrectTransactionDate.Value);
-            result.Value.Type.Value.Should().Be(CorrectType.Value);
+            result.Value.Id.Value.ShouldBe(CorrectId.Value);
+            result.Value.Recipient.Name.ShouldBe(CorrectRecipient.Name);
+            result.Value.Spending.Amount.ShouldBe(CorrectSpending.Amount);
+            result.Value.Spending.Currency.ShouldBe(CorrectSpending.Currency);
+            result.Value.TransactionDate.Value.ShouldBe(CorrectTransactionDate.Value);
+            result.Value.Type.Value.ShouldBe(CorrectType.Value);
         }
 
         [Test]
@@ -42,13 +42,13 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             var result = Expense.Create(CorrectId, CorrectRecipient, CorrectSpending, CorrectTransactionDate, CorrectType);
 
             // Assert
-            result.IsSuccess.Should().BeTrue();
+            result.IsSuccess.ShouldBeTrue();
 
-            result.Value.Id.ToString().Should().Be(CorrectId.Value.ToString());
-            result.Value.Recipient.ToString().Should().Be(CorrectRecipient.Name);
-            result.Value.Spending.ToString().Should().Be($"{CorrectSpending.Currency} {CorrectSpending.Amount}");
-            result.Value.TransactionDate.ToString().Should().Be(CorrectTransactionDate.Value.ToString("dd/MM/yyyy"));
-            result.Value.Type.ToString().Should().Be(CorrectType.Value);
+            result.Value.Id.ToString().ShouldBe(CorrectId.Value.ToString());
+            result.Value.Recipient.ToString().ShouldBe(CorrectRecipient.Name);
+            result.Value.Spending.ToString().ShouldBe($"{CorrectSpending.Currency} {CorrectSpending.Amount}");
+            result.Value.TransactionDate.ToString().ShouldBe(CorrectTransactionDate.Value.ToString("dd/MM/yyyy"));
+            result.Value.Type.ToString().ShouldBe(CorrectType.Value);
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             var result = (int)CorrectId;
 
             // Assert
-            result.Should().Be(CorrectId.Value);
+            result.ShouldBe(CorrectId.Value);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             var result = (DateTime)CorrectTransactionDate;
 
             // Assert
-            result.Should().Be(CorrectTransactionDate.Value);
+            result.ShouldBe(CorrectTransactionDate.Value);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             var result = CorrectSpending == correctSpendingCopy;
 
             // Assert
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             var result = CorrectType == correctTypeCopy;
 
             // Assert
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             var result = CorrectTransactionDate == correctTransactionDateCopy;
 
             // Assert
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
 
         [Test]
@@ -117,7 +117,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             var result = CorrectSpending == CorrectSpendingDifferingByAmount;
 
             // Assert
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Test]
@@ -127,7 +127,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             var result = CorrectSpending == CorrectSpendingDifferingByCurrency;
 
             // Assert
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             var result = CorrectType == AnotherCorrectType;
 
             // Assert
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
 
         [Test]
@@ -147,7 +147,7 @@ namespace ExpenseTracker.Domain.Tests.Expenses
             var result = CorrectTransactionDate == AnotherCorrectTransactionDate;
 
             // Assert
-            result.Should().BeFalse();
+            result.ShouldBeFalse();
         }
     }
 }
