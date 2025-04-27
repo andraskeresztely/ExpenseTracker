@@ -19,9 +19,9 @@ namespace ExpenseTracker.Web.Api
             var builder = WebApplication.CreateBuilder(args);
 
             AddPersistenceProvider(builder);
-            
+
             builder.Services.AddAutoMapper(typeof(ApiProfile));
-          
+
             builder.Services.AddCors(option => option.AddPolicy("AllowPolicy", build =>
             {
                 build.WithOrigins(builder.Configuration.GetValue<string>("Settings:WebAppBlazorBaseUrl")!).AllowAnyMethod().AllowAnyHeader();
@@ -93,31 +93,31 @@ namespace ExpenseTracker.Web.Api
 
         private static void AddPersistenceProvider(WebApplicationBuilder builder)
         {
-            switch(builder.Configuration.GetValue<string>("Settings:PersistenceProvider")!)
+            switch (builder.Configuration.GetValue<string>("Settings:PersistenceProvider")!)
             {
                 case "EfCore":
-                {
-                    builder.Services.Configure<EfCoreOptions>(builder.Configuration.GetSection("Settings:EfCoreOptions"));
-                    builder.Services.AddEfCore();
-                    builder.Services.AddAutoMapper(typeof(EfCoreProfile));
-                    break;
-                }
+                    {
+                        builder.Services.Configure<EfCoreOptions>(builder.Configuration.GetSection("Settings:EfCoreOptions"));
+                        builder.Services.AddEfCore();
+                        builder.Services.AddAutoMapper(typeof(EfCoreProfile));
+                        break;
+                    }
                 case "LiteDb":
-                {
-                    builder.Services.Configure<LiteDbOptions>(builder.Configuration.GetSection("Settings:LiteDbOptions"));
-                    builder.Services.AddLiteDb();
-                    builder.Services.AddAutoMapper(typeof(LiteDbProfile));
-                    break;
-                }
+                    {
+                        builder.Services.Configure<LiteDbOptions>(builder.Configuration.GetSection("Settings:LiteDbOptions"));
+                        builder.Services.AddLiteDb();
+                        builder.Services.AddAutoMapper(typeof(LiteDbProfile));
+                        break;
+                    }
                 case "Kafka":
-                {
-                    builder.Services.Configure<KafkaOptions>(builder.Configuration.GetSection("Settings:KafkaOptions"));
-                    builder.Services.Configure<ConsumerConfig>(builder.Configuration.GetSection("Settings:KafkaOptions"));
-                    builder.Services.Configure<ProducerConfig>(builder.Configuration.GetSection("Settings:KafkaOptions"));
-                    builder.Services.AddKafka();
-                    builder.Services.AddAutoMapper(typeof(KafkaProfile));
-                    break;
-                }
+                    {
+                        builder.Services.Configure<KafkaOptions>(builder.Configuration.GetSection("Settings:KafkaOptions"));
+                        builder.Services.Configure<ConsumerConfig>(builder.Configuration.GetSection("Settings:KafkaOptions"));
+                        builder.Services.Configure<ProducerConfig>(builder.Configuration.GetSection("Settings:KafkaOptions"));
+                        builder.Services.AddKafka();
+                        builder.Services.AddAutoMapper(typeof(KafkaProfile));
+                        break;
+                    }
             }
         }
     }

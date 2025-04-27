@@ -8,7 +8,7 @@ namespace ExpenseTracker.Domain.Expenses
     {
         public required string Value { get; init; }
 
-        private ExpenseType() {}
+        private ExpenseType() { }
 
         private static readonly ExpenseTypeValidators Validators = new();
 

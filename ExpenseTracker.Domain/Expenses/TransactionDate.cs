@@ -8,7 +8,7 @@ namespace ExpenseTracker.Domain.Expenses
     {
         public required DateTime Value { get; init; }
 
-        private TransactionDate() {}
+        private TransactionDate() { }
 
         private static readonly TransactionDateValidators Validators = new();
 

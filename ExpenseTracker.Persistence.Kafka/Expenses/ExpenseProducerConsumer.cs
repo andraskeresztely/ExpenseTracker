@@ -25,7 +25,7 @@ namespace ExpenseTracker.Persistence.Kafka.Expenses
 
             await kafkaClient.Producer.ProduceAsync(options.Value.Topic, message);
             kafkaClient.Producer.Flush(TimeSpan.FromSeconds(options.Value.TimeoutSeconds));
-           
+
             return 0;
         }
 

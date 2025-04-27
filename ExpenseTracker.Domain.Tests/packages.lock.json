@@ -36,9 +36,9 @@
       },
       "NUnit.Analyzers": {
         "type": "Direct",
-        "requested": "[4.6.0, )",
-        "resolved": "4.6.0",
-        "contentHash": "uK1TEViVBugOO6uDou1amu7CoNhrd2sEUFr/iaEmVfoeY8qq/zzWCCUZi97aCCSZmjnHKCCWKh3RucU27qPlKg=="
+        "requested": "[4.7.0, )",
+        "resolved": "4.7.0",
+        "contentHash": "1AjtK0uoJgxyobNtNwjQLlEs2X+9mgfWbWXiIktquTvpOhSXMf56TZF43+q2lIIYhV4IrfS82/pfo4uPUYka4w=="
       },
       "NUnit3TestAdapter": {
         "type": "Direct",
@@ -62,8 +62,8 @@
       },
       "CSharpFunctionalExtensions": {
         "type": "Transitive",
-        "resolved": "3.5.1",
-        "contentHash": "J9wNzOzRdc4pfO3WREYR19zjp585y7/y9TKQXKkbxxnXt7N6h2Q8AjP0+bayrgRVxpU9COaFMA8961xbptYsUg=="
+        "resolved": "3.6.0",
+        "contentHash": "c+oWbfDKKjpOLPMxn/iPn1GL24YTJMtOiGfj0AsDKZ2v6/Mr6V7BfzfWLg6KqNRx3KRy3KcQE680SwvDTI/jcg=="
       },
       "DiffEngine": {
         "type": "Transitive",
@@ -1102,7 +1102,7 @@
       "expensetracker.domain": {
         "type": "Project",
         "dependencies": {
-          "CSharpFunctionalExtensions": "[3.5.1, )"
+          "CSharpFunctionalExtensions": "[3.6.0, )"
         }
       }
     }

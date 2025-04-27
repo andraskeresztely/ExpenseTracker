@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseTracker.Persistence.EfCore.Expenses
 {
-    internal sealed class ExpenseRepository(IMapper mapper, DbContextOptions<ExpenseContext> options) : IExpenseRepository 
+    internal sealed class ExpenseRepository(IMapper mapper, DbContextOptions<ExpenseContext> options) : IExpenseRepository
     {
         public async Task<int> CreateAsync(Expense expense)
         {
@@ -24,7 +24,7 @@ namespace ExpenseTracker.Persistence.EfCore.Expenses
         {
             await using var dbContext = new ExpenseContext(options);
 
-            if(await dbContext.Expenses.FindAsync(id) is { } expenseModel)
+            if (await dbContext.Expenses.FindAsync(id) is { } expenseModel)
             {
                 dbContext.Expenses.Remove(expenseModel);
 
@@ -48,7 +48,7 @@ namespace ExpenseTracker.Persistence.EfCore.Expenses
         {
             await using var dbContext = new ExpenseContext(options);
 
-            if(await dbContext.Expenses.FindAsync(id) is not { } expenseModel)
+            if (await dbContext.Expenses.FindAsync(id) is not { } expenseModel)
             {
                 Result<Expense, Errors> errorResult = new Errors([ErrorCodes.General.NotFound()]);
 

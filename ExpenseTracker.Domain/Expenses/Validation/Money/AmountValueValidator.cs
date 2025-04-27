@@ -7,8 +7,8 @@ namespace ExpenseTracker.Domain.Expenses.Validation.Money
     {
         public Maybe<Error> Validate(Expenses.Money money)
         {
-            return money.Amount is < Rules.Spending.MinAmount or > Rules.Spending.MaxAmount 
-                ? ErrorCodes.AmountIsInvalid() 
+            return money.Amount is < Rules.Spending.MinAmount or > Rules.Spending.MaxAmount
+                ? ErrorCodes.AmountIsInvalid()
                 : Maybe<Error>.None;
         }
     }

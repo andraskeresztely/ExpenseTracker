@@ -13,53 +13,53 @@
       },
       "Confluent.Kafka": {
         "type": "Direct",
-        "requested": "[2.8.0, )",
-        "resolved": "2.8.0",
-        "contentHash": "i5Qb5BPthGXmLRSZWXVLPVNfo9Mxt+UieC+E/ZTFmlGIuPPd57g7Sxp8QP7fYp7qEBXs561jvWDLGaCZqV9ycg==",
+        "requested": "[2.10.0, )",
+        "resolved": "2.10.0",
+        "contentHash": "beGF9x9Yw83NDTs0oyNdRHSR27HjF2NpwwCZZ45hEk1zE+yDW8JXuyzitfdYftLACCbuaBJCEh+ZW7Qxg9cdnA==",
         "dependencies": {
-          "librdkafka.redist": "2.8.0"
+          "librdkafka.redist": "2.10.0"
         }
       },
       "Confluent.SchemaRegistry.Serdes.Json": {
         "type": "Direct",
-        "requested": "[2.8.0, )",
-        "resolved": "2.8.0",
-        "contentHash": "0ZMBUfK5gVMG9Ca95nwLYC1e3lOShf+1B1kEZrHetKSByRGPgxanN815K+oXQRTBv9ctqhsITxSvw5hFMcvUwQ==",
+        "requested": "[2.10.0, )",
+        "resolved": "2.10.0",
+        "contentHash": "VqiABghELcXu9oSRGgk1WRZbgVfA7aB9RY/KdXCqW9P/DJUmDRySeYd9Or8CghTyYc4LyChOmhYZkvX85WvYVg==",
         "dependencies": {
-          "Confluent.Kafka": "2.8.0",
-          "Confluent.SchemaRegistry": "2.8.0",
+          "Confluent.Kafka": "2.10.0",
+          "Confluent.SchemaRegistry": "2.10.0",
           "NJsonSchema.NewtonsoftJson": "11.0.2"
         }
       },
       "Microsoft.Extensions.Options": {
         "type": "Direct",
-        "requested": "[9.0.3, )",
-        "resolved": "9.0.3",
-        "contentHash": "xE7MpY70lkw1oiid5y6FbL9dVw8oLfkx8RhSNGN8sSzBlCqGn0SyT3Fqc8tZnDaPIq7Z8R9RTKlS564DS+MV3g==",
+        "requested": "[9.0.4, )",
+        "resolved": "9.0.4",
+        "contentHash": "fiFI2+58kicqVZyt/6obqoFwHiab7LC4FkQ3mmiBJ28Yy4fAvy2+v9MRnSvvlOO8chTOjKsdafFl/K9veCPo5g==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.3",
-          "Microsoft.Extensions.Primitives": "9.0.3"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.4",
+          "Microsoft.Extensions.Primitives": "9.0.4"
         }
       },
       "Confluent.SchemaRegistry": {
         "type": "Transitive",
-        "resolved": "2.8.0",
-        "contentHash": "VsiRejfhBBfg7ODBzyWB9Abd/AG8+duUIyLEu+wzt2HS9WaWaGtlN5udBbkvy4wehJLgWS6SDUtvw2Pzzic1kA==",
+        "resolved": "2.10.0",
+        "contentHash": "OGFhaBZiEmjyAThV6KHvjkdv1E+VxKrTfoioa69w4w0cloMmKpr82+CtDN15y0peobeHZ6s7WEnQgPJA2xZh/Q==",
         "dependencies": {
-          "Confluent.Kafka": "2.8.0",
+          "Confluent.Kafka": "2.10.0",
           "Microsoft.Extensions.Caching.Memory": "8.0.1",
           "Newtonsoft.Json": "13.0.1"
         }
       },
       "CSharpFunctionalExtensions": {
         "type": "Transitive",
-        "resolved": "3.5.1",
-        "contentHash": "J9wNzOzRdc4pfO3WREYR19zjp585y7/y9TKQXKkbxxnXt7N6h2Q8AjP0+bayrgRVxpU9COaFMA8961xbptYsUg=="
+        "resolved": "3.6.0",
+        "contentHash": "c+oWbfDKKjpOLPMxn/iPn1GL24YTJMtOiGfj0AsDKZ2v6/Mr6V7BfzfWLg6KqNRx3KRy3KcQE680SwvDTI/jcg=="
       },
       "librdkafka.redist": {
         "type": "Transitive",
-        "resolved": "2.8.0",
-        "contentHash": "Gg8nPjn9+Sp6X+O1g9duKarCteFQjpkCVJS06ihVQf4PVnR/jPXkN3vwvWe5zP4L47xiEfU+6wIp4pbIvaQ6rQ=="
+        "resolved": "2.10.0",
+        "contentHash": "QOvg/8WapA3c5EwPojCjnLEdxJNjxJ5s2GO8VxrDV9BTpnXHHGJ14MPwcGKiQeiRsBvPoeoTKMOh5KYu/Wm3jw=="
       },
       "Microsoft.CSharp": {
         "type": "Transitive",
@@ -106,8 +106,8 @@
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "Transitive",
-        "resolved": "9.0.3",
-        "contentHash": "TfaHPSe39NyL2wxkisRxXK7xvHGZYBZ+dy3r+mqGvnxKgAPdHkMu3QMQZI4pquP6W5FIQBqs8FJpWV8ffCgDqQ=="
+        "resolved": "9.0.4",
+        "contentHash": "UI0TQPVkS78bFdjkTodmkH0Fe8lXv9LnhGFKgKrsgUJ5a5FVdFRcgjIkBVLbGgdRhxWirxH/8IXUtEyYJx6GQg=="
       },
       "Microsoft.Extensions.Logging.Abstractions": {
         "type": "Transitive",
@@ -119,8 +119,8 @@
       },
       "Microsoft.Extensions.Primitives": {
         "type": "Transitive",
-        "resolved": "9.0.3",
-        "contentHash": "yCCJHvBcRyqapMSNzP+kTc57Eaavq2cr5Tmuil6/XVnipQf5xmskxakSQ1enU6S4+fNg3sJ27WcInV64q24JsA=="
+        "resolved": "9.0.4",
+        "contentHash": "SPFyMjyku1nqTFFJ928JAMd0QnRe4xjE7KeKnZMWXf3xk+6e0WiOZAluYtLdbJUXtsl2cCRSi8cBquJ408k8RA=="
       },
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",
@@ -441,7 +441,7 @@
       "expensetracker.domain": {
         "type": "Project",
         "dependencies": {
-          "CSharpFunctionalExtensions": "[3.5.1, )"
+          "CSharpFunctionalExtensions": "[3.6.0, )"
         }
       }
     }

@@ -55,7 +55,7 @@ namespace ExpenseTracker.Web.App.Blazor.Expenses.Pages
                 { dialog => dialog.Color, Color.Secondary }
             };
 
-            var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true, MaxWidth = MaxWidth.ExtraSmall};
+            var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
             var dialog = await DialogService.ShowAsync<ConfirmDialog>("Are you sure?", parameters, options);
             var result = await dialog.Result;

@@ -11,13 +11,13 @@ namespace ExpenseTracker.Persistence.Kafka
         IOptions<ProducerConfig> producerConfig,
         IOptions<ConsumerConfig> consumerConfig) : IDisposable
     {
-        public IConsumer<string, ExpenseModel> Consumer { get; } 
+        public IConsumer<string, ExpenseModel> Consumer { get; }
             = new ConsumerBuilder<string, ExpenseModel>(consumerConfig.Value)
                 .SetKeyDeserializer(Deserializers.Utf8)
                 .SetValueDeserializer(new JsonDeserializer<ExpenseModel>())
                 .Build();
 
-        public IProducer<string, ExpenseModel> Producer { get; } 
+        public IProducer<string, ExpenseModel> Producer { get; }
             = new ProducerBuilder<string, ExpenseModel>(producerConfig.Value)
                 .SetValueSerializer(new JsonSerializer<ExpenseModel>())
                 .Build();

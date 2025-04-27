@@ -10,7 +10,7 @@ namespace ExpenseTracker.Domain.Expenses
         public required TransactionDate TransactionDate { get; init; }
         public required ExpenseType Type { get; init; }
 
-        private Expense() {}
+        private Expense() { }
 
         public static Result<Expense, Errors> Create(
             ExpenseId id,
@@ -19,13 +19,13 @@ namespace ExpenseTracker.Domain.Expenses
             TransactionDate transactionDate,
             ExpenseType type)
         {
-            return new Expense 
-            { 
+            return new Expense
+            {
                 Id = id,
-                Recipient = recipient, 
-                Spending = spending, 
-                TransactionDate = transactionDate, 
-                Type = type 
+                Recipient = recipient,
+                Spending = spending,
+                TransactionDate = transactionDate,
+                Type = type
             };
         }
     }

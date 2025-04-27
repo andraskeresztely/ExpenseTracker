@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ExpenseTracker.Domain.Expenses.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
-using ExpenseTracker.Domain.Expenses.Validation;
 
 namespace ExpenseTracker.Persistence.EfCore.Expenses
 {

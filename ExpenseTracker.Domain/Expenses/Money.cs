@@ -9,7 +9,7 @@ namespace ExpenseTracker.Domain.Expenses
         public required decimal Amount { get; init; }
         public required string Currency { get; init; }
 
-        private Money() {}
+        private Money() { }
 
         private static readonly MoneyValidators Validators = new();
 

@@ -20,8 +20,8 @@ namespace ExpenseTracker.Persistence.EfCore
         internal sealed class ExpenseResolver : ITypeConverter<ExpenseModel, Result<Expense, Errors>>
         {
             public Result<Expense, Errors> Convert(
-                ExpenseModel source, 
-                Result<Expense, Errors> destination, 
+                ExpenseModel source,
+                Result<Expense, Errors> destination,
                 ResolutionContext context)
             {
                 var idResult = ExpenseId.Create(source.Id);

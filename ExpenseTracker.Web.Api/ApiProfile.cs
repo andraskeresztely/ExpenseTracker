@@ -20,8 +20,8 @@ namespace ExpenseTracker.Web.Api
         internal sealed class ExpenseResolver : ITypeConverter<ExpenseViewModel, Result<Expense, Errors>>
         {
             public Result<Expense, Errors> Convert(
-                ExpenseViewModel source, 
-                Result<Expense, Errors> destination, 
+                ExpenseViewModel source,
+                Result<Expense, Errors> destination,
                 ResolutionContext context)
             {
                 var idResult = ExpenseId.Create(source.Id);

@@ -11,7 +11,7 @@ namespace ExpenseTracker.Web.App.Blazor.Expenses.Components
 
         [Parameter]
         public EventCallback<ExpenseViewModel> OnSaveAsync { get; set; }
-        
+
         private EditContext? _editContext;
         private ExpenseViewModel? _expense;
         private bool _isError = false;

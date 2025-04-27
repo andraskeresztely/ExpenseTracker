@@ -27,7 +27,7 @@ namespace ExpenseTracker.Persistence.LiteDb.Expenses
             var expenses = dbContext.GetCollection<ExpenseModel>();
 
             expenses.Delete(id);
-            
+
             return Task.CompletedTask;
         }
 
