@@ -13,40 +13,40 @@
       },
       "Confluent.Kafka": {
         "type": "Direct",
-        "requested": "[2.10.1, )",
-        "resolved": "2.10.1",
-        "contentHash": "RijifSGsTuqXmFzphuKkAL/Uqjxit4WiEGkdKeI3bzVo4CEwI36HYIgROZTRm1z8tDkRoiCLzuQFjKQKB3wPzQ==",
+        "requested": "[2.11.0, )",
+        "resolved": "2.11.0",
+        "contentHash": "LlGynxX1lkylZkVJ6GqZGeDNs2pRLjmjJ1VAWiybKmabGlVFKitidOEkohdFpz2qsrFQnAvB+fBZIurBsSj7hw==",
         "dependencies": {
-          "librdkafka.redist": "2.10.1"
+          "librdkafka.redist": "2.11.0"
         }
       },
       "Confluent.SchemaRegistry.Serdes.Json": {
         "type": "Direct",
-        "requested": "[2.10.1, )",
-        "resolved": "2.10.1",
-        "contentHash": "qFNvkr8cXUlU2HF37Ts6gZ0o9mrjB4FwUBxJiLtNFaZiHjOBAZpq7t5apG/sX1fWzlx36eYOR/0viNd3pnfnHg==",
+        "requested": "[2.11.0, )",
+        "resolved": "2.11.0",
+        "contentHash": "bwhlHA8/hG5InABTXAgjVV6dwAmx84E1yKcRL9ZJz1NGdqlD9ysXOoMbtJXZ8N72T/Ij/oYogExh4EVHun3G5Q==",
         "dependencies": {
-          "Confluent.Kafka": "2.10.1",
-          "Confluent.SchemaRegistry": "2.10.1",
+          "Confluent.Kafka": "2.11.0",
+          "Confluent.SchemaRegistry": "2.11.0",
           "NJsonSchema.NewtonsoftJson": "11.0.2"
         }
       },
       "Microsoft.Extensions.Options": {
         "type": "Direct",
-        "requested": "[9.0.6, )",
-        "resolved": "9.0.6",
-        "contentHash": "wUPhNM1zsI58Dy10xRdF2+pnsisiUuETg5ZBncyAEEUm/CQ9Q1vmivyUWH8RDbAlqyixf2dJNQ2XZb7HsKUEQw==",
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "OmTaQ0v4gxGQkehpwWIqPoEiwsPuG/u4HUsbOFoWGx4DKET2AXzopnFe/fE608FIhzc/kcg2p8JdyMRCCUzitQ==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.6",
-          "Microsoft.Extensions.Primitives": "9.0.6"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.8",
+          "Microsoft.Extensions.Primitives": "9.0.8"
         }
       },
       "Confluent.SchemaRegistry": {
         "type": "Transitive",
-        "resolved": "2.10.1",
-        "contentHash": "so7VIBAMdCZckB4uJqeG7sgw9/ZBMo4y9IZW6WqQkswvI0SpkCSKnUYHgkcJD+9Afvqh0VxZDqCuiuH+ieWjvA==",
+        "resolved": "2.11.0",
+        "contentHash": "E9JGg2EFDOIoAuu8DUoz05jn2tVDpBqp0FYDx/tJcxFix0V5nW9Cnje7IEmuu1K5a4iu+3YFjzn4/CLO8wawMA==",
         "dependencies": {
-          "Confluent.Kafka": "2.10.1",
+          "Confluent.Kafka": "2.11.0",
           "Microsoft.Extensions.Caching.Memory": "8.0.1",
           "Newtonsoft.Json": "13.0.1"
         }
@@ -58,8 +58,8 @@
       },
       "librdkafka.redist": {
         "type": "Transitive",
-        "resolved": "2.10.1",
-        "contentHash": "V7A5FqqVKHyAzU4k/rDU+QRcJlG87beGZKVzCFp/5lGNayudycqi+x45Ax6O6wOeW0a8lGf6XKmNb23/VHjNHA=="
+        "resolved": "2.11.0",
+        "contentHash": "+CMp3EuJSuDhOZZbjdcWgB2McrqJnjMvi8GsaCecnDEmfVRJzOP55CoT92uJxATrztq4F0daFFyPWaKS1nsoxA=="
       },
       "Microsoft.CSharp": {
         "type": "Transitive",
@@ -106,8 +106,8 @@
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "Transitive",
-        "resolved": "9.0.6",
-        "contentHash": "0Zn6nR/6g+90MxskZyOOMPQvnPnrrGu6bytPwkV+azDcTtCSuQ1+GJUrg8Klmnrjk1i6zMpw2lXijl+tw7Q3kA=="
+        "resolved": "9.0.8",
+        "contentHash": "xY3lTjj4+ZYmiKIkyWitddrp1uL5uYiweQjqo4BKBw01ZC4HhcfgLghDpPZcUlppgWAFqFy9SgkiYWOMx365pw=="
       },
       "Microsoft.Extensions.Logging.Abstractions": {
         "type": "Transitive",
@@ -119,8 +119,8 @@
       },
       "Microsoft.Extensions.Primitives": {
         "type": "Transitive",
-        "resolved": "9.0.6",
-        "contentHash": "BHniU24QV67qp1pJknqYSofAPYGmijGI8D+ci9yfw33iuFdyOeB9lWTg78ThyYLyQwZw3s0vZ36VMb0MqbUuLw=="
+        "resolved": "9.0.8",
+        "contentHash": "tizSIOEsIgSNSSh+hKeUVPK7xmTIjR8s+mJWOu1KXV3htvNQiPMFRMO17OdI1y/4ZApdBVk49u/08QGC9yvLug=="
       },
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",
