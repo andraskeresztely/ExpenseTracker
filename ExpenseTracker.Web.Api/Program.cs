@@ -3,10 +3,8 @@ using Confluent.Kafka;
 using ExpenseTracker.Persistence.EfCore;
 using ExpenseTracker.Persistence.Kafka;
 using ExpenseTracker.Persistence.LiteDb;
-using ExpenseTracker.Web.Api.Swagger;
-using Microsoft.Extensions.Options;
+using Scalar.AspNetCore;
 using Serilog;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Diagnostics.CodeAnalysis;
 
 namespace ExpenseTracker.Web.Api
@@ -31,12 +29,7 @@ namespace ExpenseTracker.Web.Api
 
             builder.Services.AddProblemDetails();
 
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSingleton<IConfigureOptions<SwaggerGenOptions>, SwaggerGenOptionsConfig>();
-            builder.Services.AddSwaggerGen(options =>
-            {
-                options.OperationFilter<SwaggerDefaultValues>();
-            });
+            builder.Services.AddOpenApi();
 
             builder.Services.AddApiVersioning(options =>
             {
@@ -64,18 +57,8 @@ namespace ExpenseTracker.Web.Api
 
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    var descriptions = app.DescribeApiVersions();
-
-                    foreach (var description in descriptions)
-                    {
-                        var url = $"/swagger/{description.GroupName}/swagger.json";
-                        var name = description.GroupName.ToUpperInvariant();
-                        options.SwaggerEndpoint(url, name);
-                    }
-                });
+                app.MapOpenApi();
+                app.MapScalarApiReference();
             }
 
             app.UseCors("AllowPolicy");
